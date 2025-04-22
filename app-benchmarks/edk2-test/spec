@@ -1,0 +1,9 @@
+UPSTREAM_VER=202406
+EDK2_VER=202405
+VER=${UPSTREAM_VER}+edk2${EDK2_VER}
+SRCS="git::commit=tags/edk2-test-stable${UPSTREAM_VER};copy-repo=true;submodule=false::https://github.com/tianocore/edk2-test
+      git::commit=tags/edk2-stable${EDK2_VER};copy-repo=true;submodule=false::https://github.com/tianocore/edk2"
+CHKSUMS="SKIP \
+         SKIP"
+SUBDIR=.
+CHKUPDATE="anitya::id=372899"

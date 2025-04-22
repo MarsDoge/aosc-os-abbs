@@ -1,0 +1,28 @@
+if ab_match_arch amd64; then
+    _EDK2_TARGET="X64"
+elif ab_match_arch arm64; then
+    _EDK2_TARGET="AARCH64"
+elif ab_match_arch loongarch64; then
+    _EDK2_TARGET="LOONGARCH64"
+fi
+
+abinfo "Unpacking 64-bit EFI executable Package..."
+if [ -L "SctPkg" ]; then
+    SctPkg=$(readlink -f "SctPkg")
+fi
+
+file_type=$(file -b $SctPkg)
+
+case "$file_type" in
+  *Zip*) unzip $SctPkg ;;
+  *gzip*) tar -xvzf $SctPkg ;;
+  *xz*) tar -xvJf $SctPkg ;;
+  *)
+    echo "Not supported: $file_type"
+    exit 2
+    ;;
+esac
+
+abinfo "Installing EFI executable $ARCH ${_EDK2_TARGET} "$SRCDIR"/SctPackage${_EDK2_TARGET}..."
+mkdir -pv "$PKGDIR"/usr/share/SctPackage/ && cp -r "$SRCDIR"/SctPackage${_EDK2_TARGET}/* "$PKGDIR"/usr/share/SctPackage/
+
