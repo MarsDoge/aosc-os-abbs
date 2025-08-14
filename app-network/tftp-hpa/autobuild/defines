@@ -1,0 +1,4 @@
+PKGNAME=tftp-hpa
+PKGSEC=net
+PKGDEP="libevent readline tcp-wrappers"
+PKGDES="Trivial File Transfer Protocol (TFTP) server and client"
