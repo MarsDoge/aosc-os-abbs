@@ -1,0 +1,3 @@
+VER=5.2
+SRCS="tbl::https://mirrors.edge.kernel.org/pub/software/network/tftp/tftp-hpa/tftp-hpa-${VER}.tar.gz"
+CHKSUMS="SKIP"
