@@ -1,0 +1,41 @@
+From 3e8d89c6c6b86e41800f090b9c1e319e52319feb Mon Sep 17 00:00:00 2001
+From: Sam Lantinga <slouken@libsdl.org>
+Date: Sun, 22 Jul 2012 16:33:37 -0700
+Subject: [PATCH 4/6] BACKPORT: Fixed normal linking with libmikmod and linking
+ with earlier versions of libmikmod.
+
+Signed-off-by: ilikara <3435193369@qq.com>
+---
+ dynamic_mod.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/dynamic_mod.c b/dynamic_mod.c
+index df4d64d1..bfca96f4 100644
+--- a/dynamic_mod.c
++++ b/dynamic_mod.c
+@@ -97,8 +97,8 @@ int Mix_InitMOD()
+ 			(void (*)(void*))
+ 			SDL_LoadFunction(mikmod.handle, "MikMod_free");
+ 		if ( mikmod.MikMod_free == NULL ) {
+-			SDL_UnloadObject(mikmod.handle);
+-			return -1;
++			/* libmikmod 3.1 and earlier doesn't have it */
++			mikmod.MikMod_free = free;
+ 		}
+ 		mikmod.Player_Active =
+ 			(BOOL (*)(void))
+@@ -246,6 +246,11 @@ int Mix_InitMOD()
+ 		mikmod.MikMod_RegisterDriver = MikMod_RegisterDriver;
+ 		mikmod.MikMod_errno = &MikMod_errno;
+ 		mikmod.MikMod_strerror = MikMod_strerror;
++#if LIBMIKMOD_VERSION < ((3<<16)|(2<<8))
++		mikmod.MikMod_free = free;
++#else
++		mikmod.MikMod_free = MikMod_free;
++#endif
+ 		mikmod.Player_Active = Player_Active;
+ 		mikmod.Player_Free = Player_Free;
+ 		mikmod.Player_LoadGeneric = Player_LoadGeneric;
+-- 
+2.51.0
+

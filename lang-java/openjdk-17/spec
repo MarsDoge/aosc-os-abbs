@@ -1,4 +1,4 @@
-UPSTREAM_VER=17.0.15-ga
+UPSTREAM_VER=17.0.16-ga
 VER=${UPSTREAM_VER/-/+}
 SRCS="git::commit=aosc/${UPSTREAM_VER%%.*}/${UPSTREAM_VER}/${REL:-0}::https://github.com/AOSC-Tracking/jdk"
 CHKSUMS="SKIP"

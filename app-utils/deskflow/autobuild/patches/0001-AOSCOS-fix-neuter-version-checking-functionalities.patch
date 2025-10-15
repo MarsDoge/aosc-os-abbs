@@ -1,0 +1,253 @@
+From 000aa13d78fb5881d5f7ff1ce7a1efb555e49a09 Mon Sep 17 00:00:00 2001
+From: Mingcong Bai <jeffbai@aosc.io>
+Date: Fri, 9 May 2025 00:22:30 +0800
+Subject: [PATCH] AOSCOS: fix: neuter version checking functionalities
+
+As required by the Styling Manual.
+
+Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
+---
+ src/lib/common/Settings.cpp            |  3 ---
+ src/lib/common/Settings.h              |  4 ----
+ src/lib/gui/CMakeLists.txt             |  2 --
+ src/lib/gui/MainWindow.cpp             | 18 ------------------
+ src/lib/gui/MainWindow.h               |  3 ---
+ src/lib/gui/Messages.cpp               | 18 ------------------
+ src/lib/gui/Messages.h                 |  2 --
+ src/lib/gui/dialogs/SettingsDialog.cpp |  3 ---
+ src/lib/gui/dialogs/SettingsDialog.ui  |  8 --------
+ 9 files changed, 61 deletions(-)
+
+diff --git a/src/lib/common/Settings.cpp b/src/lib/common/Settings.cpp
+index ee9ffc94e..64b837444 100644
+--- a/src/lib/common/Settings.cpp
++++ b/src/lib/common/Settings.cpp
+@@ -112,9 +112,6 @@ QVariant Settings::defaultValue(const QString &key)
+   if (key == Daemon::Elevate)
+     return Settings::isNativeMode();
+ 
+-  if (key == Core::UpdateUrl)
+-    return kUrlUpdateCheck;
+-
+   if (key == Server::ExternalConfigFile)
+     return QStringLiteral("%1/%2-server.conf").arg(Settings::settingsPath(), kAppId);
+ 
+diff --git a/src/lib/common/Settings.h b/src/lib/common/Settings.h
+index c3bc87a48..2f55d1f99 100644
+--- a/src/lib/common/Settings.h
++++ b/src/lib/common/Settings.h
+@@ -48,7 +48,6 @@ public:
+     inline static const auto ProcessMode = QStringLiteral("core/processMode");
+     inline static const auto ScreenName = QStringLiteral("core/screenName");
+     inline static const auto StartedBefore = QStringLiteral("core/startedBefore");
+-    inline static const auto UpdateUrl = QStringLiteral("core/updateUrl");
+   };
+   struct Daemon
+   {
+@@ -60,7 +59,6 @@ public:
+   struct Gui
+   {
+     inline static const auto Autohide = QStringLiteral("gui/autoHide");
+-    inline static const auto AutoUpdateCheck = QStringLiteral("gui/enableUpdateCheck");
+     inline static const auto CloseReminder = QStringLiteral("gui/closeReminder");
+     inline static const auto CloseToTray = QStringLiteral("gui/closeToTray");
+     inline static const auto LogExpanded = QStringLiteral("gui/logExpanded");
+@@ -165,7 +163,6 @@ private:
+     , Settings::Core::ProcessMode
+     , Settings::Core::ScreenName
+     , Settings::Core::StartedBefore
+-    , Settings::Core::UpdateUrl
+     , Settings::Daemon::Command
+     , Settings::Daemon::Elevate
+     , Settings::Daemon::LogFile
+@@ -173,7 +170,6 @@ private:
+     , Settings::Log::Level
+     , Settings::Log::ToFile
+     , Settings::Gui::Autohide
+-    , Settings::Gui::AutoUpdateCheck
+     , Settings::Gui::CloseReminder
+     , Settings::Gui::CloseToTray
+     , Settings::Gui::LogExpanded
+diff --git a/src/lib/gui/CMakeLists.txt b/src/lib/gui/CMakeLists.txt
+index 01bf8cfb7..fcfba4fe9 100644
+--- a/src/lib/gui/CMakeLists.txt
++++ b/src/lib/gui/CMakeLists.txt
+@@ -42,8 +42,6 @@ add_library(${target} STATIC
+   ServerConfig.h
+   Styles.h
+   StyleUtils.h
+-  VersionChecker.cpp
+-  VersionChecker.h
+   config/IServerConfig.h
+   config/Screen.cpp
+   config/Screen.h
+diff --git a/src/lib/gui/MainWindow.cpp b/src/lib/gui/MainWindow.cpp
+index 71b987008..a98de39eb 100644
+--- a/src/lib/gui/MainWindow.cpp
++++ b/src/lib/gui/MainWindow.cpp
+@@ -324,8 +324,6 @@ void MainWindow::connectSlots()
+   connect(m_actionRestartCore, &QAction::triggered, this, &MainWindow::resetCore);
+   connect(m_actionStopCore, &QAction::triggered, this, &MainWindow::stopCore);
+ 
+-  connect(&m_versionChecker, &VersionChecker::updateFound, this, &MainWindow::versionCheckerUpdateFound);
+-
+ // Mac os tray will only show a menu
+ #ifndef Q_OS_MAC
+   connect(m_trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::trayIconActivated);
+@@ -409,12 +407,6 @@ void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
+   isVisible() ? hide() : showAndActivate();
+ }
+ 
+-void MainWindow::versionCheckerUpdateFound(const QString &version)
+-{
+-  m_btnUpdate->setVisible(true);
+-  m_btnUpdate->setToolTip(tr("A new version v%1 is available").arg(version));
+-}
+-
+ void MainWindow::coreProcessError(CoreProcess::Error error)
+ {
+   if (error == CoreProcess::Error::AddressMissing) {
+@@ -634,16 +626,6 @@ void MainWindow::open()
+   const auto kCriticalDialogDelay = 100;
+   QTimer::singleShot(kCriticalDialogDelay, this, &messages::raiseCriticalDialog);
+ 
+-  if (!Settings::value(Settings::Gui::AutoUpdateCheck).isValid()) {
+-    Settings::setValue(Settings::Gui::AutoUpdateCheck, messages::showUpdateCheckOption(this));
+-  }
+-
+-  if (Settings::value(Settings::Gui::AutoUpdateCheck).toBool()) {
+-    m_versionChecker.checkLatest();
+-  } else {
+-    qDebug() << "update check disabled";
+-  }
+-
+   if (Settings::value(Settings::Core::StartedBefore).toBool()) {
+     if (ui->rbModeClient->isChecked() && ui->lineHostname->text().isEmpty())
+       return;
+diff --git a/src/lib/gui/MainWindow.h b/src/lib/gui/MainWindow.h
+index 0e1705a01..8c305587f 100644
+--- a/src/lib/gui/MainWindow.h
++++ b/src/lib/gui/MainWindow.h
+@@ -17,7 +17,6 @@
+ #include <QThread>
+ 
+ #include "ServerConfig.h"
+-#include "VersionChecker.h"
+ #include "gui/core/ClientConnection.h"
+ #include "gui/core/CoreProcess.h"
+ #include "gui/core/ServerConnection.h"
+@@ -97,7 +96,6 @@ private:
+   void coreProcessError(CoreProcess::Error error);
+   void coreConnectionStateChanged(CoreProcess::ConnectionState state);
+   void coreProcessStateChanged(CoreProcess::ProcessState state);
+-  void versionCheckerUpdateFound(const QString &version);
+   void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
+   void serverConnectionConfigureClient(const QString &clientName);
+ 
+@@ -164,7 +162,6 @@ private:
+   inline static const auto m_guiSocketName = QStringLiteral("deskflow-gui");
+   inline static const auto m_nameRegEx = QRegularExpression(QStringLiteral("^[\\w\\-_\\.]{0,255}$"));
+ 
+-  VersionChecker m_versionChecker;
+   bool m_secureSocket = false;
+   bool m_saveOnExit = true;
+   deskflow::gui::core::WaylandWarnings m_waylandWarnings;
+diff --git a/src/lib/gui/Messages.cpp b/src/lib/gui/Messages.cpp
+index a8a285f3d..b5523a65e 100644
+--- a/src/lib/gui/Messages.cpp
++++ b/src/lib/gui/Messages.cpp
+@@ -286,24 +286,6 @@ void showWaylandLibraryError(QWidget *parent)
+   );
+ }
+ 
+-bool showUpdateCheckOption(QWidget *parent)
+-{
+-  QMessageBox message(parent);
+-  message.addButton(QObject::tr("No thanks"), QMessageBox::RejectRole);
+-  const auto checkButton = message.addButton(QObject::tr("Check for updates"), QMessageBox::AcceptRole);
+-  message.setText(
+-      QObject::tr(
+-          "<p>Would you like to check for updates when %1 starts?</p>"
+-          "<p>Checking for updates requires an Internet connection.</p>"
+-          "<p>URL: <pre>%2</pre></p>"
+-      )
+-          .arg(kAppName, Settings::value(Settings::Core::UpdateUrl).toString())
+-  );
+-
+-  message.exec();
+-  return message.clickedButton() == checkButton;
+-}
+-
+ bool showDaemonOffline(QWidget *parent)
+ {
+   QMessageBox message(parent);
+diff --git a/src/lib/gui/Messages.h b/src/lib/gui/Messages.h
+index f035e2092..339eb8dfb 100644
+--- a/src/lib/gui/Messages.h
++++ b/src/lib/gui/Messages.h
+@@ -47,8 +47,6 @@ void showReadOnlySettings(QWidget *parent, const QString &systemSettingsPath);
+ 
+ void showWaylandLibraryError(QWidget *parent);
+ 
+-bool showUpdateCheckOption(QWidget *parent);
+-
+ bool showDaemonOffline(QWidget *parent);
+ 
+ } // namespace deskflow::gui::messages
+diff --git a/src/lib/gui/dialogs/SettingsDialog.cpp b/src/lib/gui/dialogs/SettingsDialog.cpp
+index 2dd47cbf0..2fa2d1a52 100644
+--- a/src/lib/gui/dialogs/SettingsDialog.cpp
++++ b/src/lib/gui/dialogs/SettingsDialog.cpp
+@@ -133,7 +133,6 @@ void SettingsDialog::accept()
+   Settings::setValue(Settings::Log::File, ui->lineLogFilename->text());
+   Settings::setValue(Settings::Daemon::Elevate, ui->cbElevateDaemon->isChecked());
+   Settings::setValue(Settings::Gui::Autohide, ui->cbAutoHide->isChecked());
+-  Settings::setValue(Settings::Gui::AutoUpdateCheck, ui->cbAutoUpdate->isChecked());
+   Settings::setValue(Settings::Core::PreventSleep, ui->cbPreventSleep->isChecked());
+   Settings::setValue(Settings::Security::Certificate, ui->lineTlsCertPath->text());
+   Settings::setValue(Settings::Security::KeySize, ui->comboTlsKeyLength->currentText().toInt());
+@@ -167,7 +166,6 @@ void SettingsDialog::loadFromConfig()
+   ui->cbScrollDirection->setChecked(Settings::value(Settings::Client::InvertScrollDirection).toBool());
+   ui->cbCloseToTray->setChecked(Settings::value(Settings::Gui::CloseToTray).toBool());
+   ui->cbElevateDaemon->setChecked(Settings::value(Settings::Daemon::Elevate).toBool());
+-  ui->cbAutoUpdate->setChecked(Settings::value(Settings::Gui::AutoUpdateCheck).toBool());
+ 
+   const auto processMode = Settings::value(Settings::Core::ProcessMode).value<Settings::ProcessMode>();
+   ui->groupService->setChecked(processMode == Settings::ProcessMode::Service);
+@@ -258,7 +256,6 @@ void SettingsDialog::updateControls()
+   ui->comboLogLevel->setEnabled(writable);
+   ui->cbLogToFile->setEnabled(writable);
+   ui->cbAutoHide->setEnabled(writable);
+-  ui->cbAutoUpdate->setEnabled(writable);
+   ui->cbPreventSleep->setEnabled(writable);
+   ui->lineTlsCertPath->setEnabled(writable);
+   ui->comboTlsKeyLength->setEnabled(writable);
+diff --git a/src/lib/gui/dialogs/SettingsDialog.ui b/src/lib/gui/dialogs/SettingsDialog.ui
+index 1ff603b05..55a7d1721 100644
+--- a/src/lib/gui/dialogs/SettingsDialog.ui
++++ b/src/lib/gui/dialogs/SettingsDialog.ui
+@@ -84,13 +84,6 @@
+           <string>App</string>
+          </property>
+          <layout class="QVBoxLayout" name="_9">
+-          <item>
+-           <widget class="QCheckBox" name="cbAutoUpdate">
+-            <property name="text">
+-             <string>Check for updates on startup </string>
+-            </property>
+-           </widget>
+-          </item>
+           <item>
+            <widget class="QCheckBox" name="cbCloseToTray">
+             <property name="text">
+@@ -612,7 +605,6 @@
+   <tabstop>cbPreventSleep</tabstop>
+   <tabstop>cbLanguageSync</tabstop>
+   <tabstop>cbScrollDirection</tabstop>
+-  <tabstop>cbAutoUpdate</tabstop>
+   <tabstop>cbCloseToTray</tabstop>
+   <tabstop>cbAutoHide</tabstop>
+   <tabstop>rbIconColorful</tabstop>
+-- 
+2.50.1
+

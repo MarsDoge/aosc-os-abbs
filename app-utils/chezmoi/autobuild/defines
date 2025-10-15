@@ -1,0 +1,8 @@
+PKGNAME=chezmoi
+PKGDES="Manage your dotfiles across multiple diverse machines"
+PKGSEC=utils
+PKGDEP="git glibc"
+BUILDDEP="go"
+
+ABTYPE=gomod
+GO_BUILD_AFTER=(-tags "noupgrade")

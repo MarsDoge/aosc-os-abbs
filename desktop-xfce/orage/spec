@@ -1,4 +1,4 @@
-VER=4.20.0
+VER=4.20.2
 SRCS="https://archive.xfce.org/src/apps/orage/${VER%.*}/orage-$VER.tar.bz2"
-CHKSUMS="sha256::ee07918a6f6033e6107e9c1b8e164c645ea590ffbdba0b58d071c0e491046a85"
+CHKSUMS="sha256::6bfd3da084c2977fb5cee26c8e94bf55e358da8e86dd2a83c6fa9174f24672a1"
 CHKUPDATE="anitya::id=231994"

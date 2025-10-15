@@ -1,0 +1,17 @@
+abinfo "Configuring Samba ..."
+"$SRCDIR"/configure \
+    "${WAF_AFTER[@]}"
+
+abinfo "Building Samba ..."
+make
+
+abinfo "Installing Samba ..."
+install -dvm755 "$SRCDIR"/samba-full
+make install \
+    DESTDIR="$PKGDIR"
+
+abinfo "Making sure smbtar is installed ..."
+if [ ! -e "$PKGDIR"/usr/bin/smbtar ]; then
+    install -Dvm755 "$SRCDIR"/source3/script/smbtar \
+        -t "$PKGDIR"/usr/bin/
+fi

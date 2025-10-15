@@ -1,0 +1,11 @@
+abinfo "Disabling analytics ..."
+dart --disable-analytics
+
+abinfo "Fetching dependencies ..."
+dart pub get
+
+abinfo "Building fvm ..."
+dart compile aot-snapshot -o "$SRCDIR"/fvm.snapshot "$SRCDIR"/bin/main.dart
+
+abinfo "Installing fvm ..."
+install -Dvm644 "$SRCDIR"/fvm.snapshot -t "$PKGDIR"/usr/lib/fvm

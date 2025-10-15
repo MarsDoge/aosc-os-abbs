@@ -1,0 +1,29 @@
+From 9c69d4503898392f48dcdf66cf188567cfce12df Mon Sep 17 00:00:00 2001
+From: Florian Weimer <fweimer@redhat.com>
+Date: Tue, 3 Jan 2023 16:18:57 +0100
+Subject: [PATCH 5/6] configure: Avoid implicit declaration of printf in %'d
+ check
+
+Include <stdio.h> for the printf function.  This avoids an implicit
+function declaration in this configure check, causing to fail
+unconditionally with compilers that do not support them.
+---
+ openpgm/pgm/configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 43082d4..d558755 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -242,7 +242,7 @@ msf.imsf_numsrc = 0;]])],
+ # sprintf, caveat http://savannah.gnu.org/patch/?6848 (ax_c_printf_thsep)
+ AC_MSG_CHECKING([for printf thousands' grouping])
+ AC_COMPILE_IFELSE(
+-	[AC_LANG_PROGRAM(,[[printf ("%'d", 1000000);]])],
++	[AC_LANG_PROGRAM([[#include <stdio.h>]],[[printf ("%'d", 1000000);]])],
+ 	[AC_MSG_RESULT([yes])
+ 		CFLAGS="$CFLAGS -DHAVE_SPRINTF_GROUPING"],
+ 	[AC_MSG_RESULT([no])])
+-- 
+2.49.0
+

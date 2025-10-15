@@ -16,6 +16,7 @@ PKGDEP__PPC64="${PKGDEP__RETRO}"
 BUILDDEP="bluez gdb valgrind xorg-server"
 # FIXME: Valgrind is not yet available.
 BUILDDEP__LOONGARCH64="${BUILDDEP/valgrind/}"
+BUILDDEP__LOONGARCH64_NOSIMD="${BUILDDEP__LOONGARCH64}"
 BUILDDEP__RISCV64="${BUILDDEP/valgrind/}"
 BUILDDEP__RETRO=""
 BUILDDEP__ARMV4="${BUILDDEP__RETRO}"
@@ -26,9 +27,6 @@ BUILDDEP__LOONGSON2F="${BUILDDEP__RETRO}"
 BUILDDEP__M68K="${BUILDDEP__RETRO}"
 BUILDDEP__POWERPC="${BUILDDEP__RETRO}"
 BUILDDEP__PPC64="${BUILDDEP__RETRO}"
-
-# FIXME: GCC prints the wrong multiarch, we used a hack in prepare to address this problem.
-RECONF__MIPS64R6EL=0
 
 AUTOTOOLS_AFTER="--with-computed-gotos \
                  --with-lto \

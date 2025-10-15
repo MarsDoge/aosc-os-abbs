@@ -1,9 +1,11 @@
 PKGNAME=llvm
 PKGSEC=devel
-PKGDEP="llvm-18"
+PKGDEP="llvm-20"
 PKGDES="Low Level Virtual Machine Infrastructure"
 
 PKGEPOCH=1
 
-ABTYPE=dummy
-ABHOST=noarch
+ABTYPE=self
+ABSPLITDBG=0
+PKGBREAK="llvm-18<=18.1.8-11"
+PKGREP="llvm-18<=18.1.8-11"

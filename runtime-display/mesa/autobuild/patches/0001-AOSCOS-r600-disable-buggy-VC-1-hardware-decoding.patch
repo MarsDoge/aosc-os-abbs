@@ -1,4 +1,4 @@
-From bb1fcd450306cc92176fbcad17f3e448de7d82db Mon Sep 17 00:00:00 2001
+From 74fc705bae7a308b739639f347542be4963ee749 Mon Sep 17 00:00:00 2001
 From: "Lain \"Fearyncess\" Yang" <fsf@live.com>
 Date: Fri, 30 Aug 2024 17:27:37 +0800
 Subject: [PATCH 1/8] AOSCOS: r600: disable buggy VC-1 hardware decoding
@@ -20,7 +20,7 @@ Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/gallium/drivers/r600/radeon_video.c b/src/gallium/drivers/r600/radeon_video.c
-index 670e0aafb9e..6e5abd8d1a1 100644
+index 0502c50b48d..a3727ce2ca7 100644
 --- a/src/gallium/drivers/r600/radeon_video.c
 +++ b/src/gallium/drivers/r600/radeon_video.c
 @@ -237,7 +237,7 @@ int rvid_get_video_param(struct pipe_screen *screen,

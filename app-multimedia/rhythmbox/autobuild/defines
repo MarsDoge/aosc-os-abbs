@@ -2,9 +2,10 @@ PKGNAME=rhythmbox
 PKGSEC=gnome
 PKGDEP="dconf desktop-file-utils gst-plugins-base-1-0 gst-plugins-good-1-0 \
         json-glib libnotify libpeas libsoup media-player-info pygobject-3 \
-        tdb totem-pl-parser webkit2gtk libdmapsharing libgpod check libgudev"
+        tdb totem-pl-parser webkit2gtk libdmapsharing libgpod check libgudev \
+        gtk-update-icon-cache"
 PKGSUG="brasero grilo-plugins gst-libav-1-0 gst-plugins-bad-1-0 \
-          gst-plugins-ugly-1-0 gvfs libgpod libmtp mako lirc"
+        gst-plugins-ugly-1-0 gvfs libgpod libmtp mako lirc"
 BUILDDEP="brasero gobject-introspection grilo intltool itstool \
           libgpod libmtp vala lirc yelp-tools"
 PKGDES="An iTunes-like music player and manager"
@@ -12,7 +13,18 @@ PKGDES="An iTunes-like music player and manager"
 ABTYPE=meson
 
 # FIXME: Enable grilo after grilo built against libsoup3 - gnome 43
-MESON_AFTER="-Dgrilo=disabled \
-             -Ddaap=enabled"
+#
+# FIXME: -Dplugins_python=disabled
+#
+#        Python support was removed from libpeas.
+#
+#        libpeas still requires girepository-1.0 but PyGObject now
+#        requires girepository-2.0. The two may not be called in the
+#        same process.
+MESON_AFTER=(
+    '-Dgrilo=disabled'
+    '-Ddaap=enabled'
+    '-Dplugins_python=disabled'
+)
 
 PKGQUIRK=gnome

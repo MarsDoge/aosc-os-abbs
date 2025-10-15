@@ -1,9 +1,28 @@
 PKGNAME=cpu-x
 PKGSEC=utils
 PKGDES="A tool to present information on CPU, motherboard and more"
-PKGDEP="gtkmm-3 glibmm pangomm cairomm libsigc++ glib ncurses libcpuid \
-        pciutils libglvnd vulkan libcl procps gcc-runtime glibc"
-BUILDDEP="gettext opencl-registry-api"
+PKGDEP="cairomm gcc-runtime glib glibc glibmm gtkmm-3 libcl libcpuid \
+        libsigc++ ncurses pangomm pciutils procps vulkan-loader polkit"
+BUILDDEP="gettext opencl-registry-api vulkan-headers"
 BUILDDEP__AMD64="${BUILDDEP} nasm"
 
-CMAKE_AFTER="-DWITH_OPENCL=ON"
+ABTYPE=cmakeninja
+
+CMAKE_AFTER=(
+    '-DWITH_DMIDECODE=ON'
+    '-DWITH_GETTEXT=ON'
+    '-DWITH_GTK=ON'
+    '-DWITH_LIBCPUID=ON'
+    '-DWITH_LIBEGL=ON'
+    '-DWITH_LIBPCI=ON'
+    '-DWITH_LIBPROCPS=ON'
+    '-DWITH_LIBSTATGRAB=ON'
+    '-DWITH_NCURSES=ON'
+    '-DWITH_OPENCL=ON'
+    '-DWITH_VULKAN=ON'
+)
+
+CMAKE_AFTER__AMD64=(
+    '${CMAKE_AFTER[@]}'
+    '-DWITH_BANDWIDTH=ON'
+)

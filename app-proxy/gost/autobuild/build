@@ -1,0 +1,7 @@
+abinfo "Building gost ..."
+cd "$SRCDIR"/cmd/gost
+go build
+
+abinfo "Installing gost ..."
+cd "$SRCDIR"
+install -Dvm755 cmd/gost/gost "$PKGDIR"/usr/bin/gost

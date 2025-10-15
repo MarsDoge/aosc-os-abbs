@@ -1,7 +1,7 @@
-From e8f0fcdd316628e36acfbf4579f583cc31d282e7 Mon Sep 17 00:00:00 2001
+From 81d329947167c055d7ca2ea19be3234f8885da26 Mon Sep 17 00:00:00 2001
 From: xtex <xtexchooser@duck.com>
 Date: Mon, 16 Sep 2024 20:28:29 +0800
-Subject: [PATCH 08/10] FROM AOSC: Link against vorbisenc
+Subject: [PATCH 08/11] FROM AOSC: Link against vorbisenc
 
 vorbis_encode_setup_init symbol cannot be found when vorbisenc.so is not linked in.
 ---
@@ -9,21 +9,21 @@ vorbis_encode_setup_init symbol cannot be found when vorbisenc.so is not linked 
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/configure b/configure
-index 658c17404..f2769e20c 100755
+index 216b9f3d9..b70b1ef84 100755
 --- a/configure
 +++ b/configure
-@@ -1875,9 +1875,9 @@ check_libvorbis()
+@@ -1835,9 +1835,9 @@ check_libvorbis()
    if which_wrapper pkg-config > /dev/null; then
      libvorbis_ver=`pkg-config vorbis --modversion 2>> $LOG`
      if [ $? -eq 0 ]; then
 -      FLGVRB=`pkg-config vorbis --cflags`
 +      FLGVRB="$(pkg-config vorbis --cflags) $(pkg-config vorbisenc --cflags)"
        INCVRB=`strip_I "$FLGVRB"`
--      LIBVRB=`pkg-config vorbis --libs`
+-      LIBVRB=`pkg-config vorbis vorbisenc --libs`
 +      LIBVRB="$(pkg-config vorbis --libs) $(pkg-config vorbisenc --libs)"
      fi
      cat > $ODIR.tmp_src.cc << EOF
  #include <cstdio>
 -- 
-2.49.0
+2.51.0
 

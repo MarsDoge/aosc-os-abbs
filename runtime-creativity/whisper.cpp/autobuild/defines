@@ -1,0 +1,14 @@
+PKGNAME=whisper.cpp
+PKGSEC=misc
+PKGDEP="gcc-runtime glibc ggml"
+PKGDES="Utility and library to work with OpenAI's automatic speech recognition model"
+
+CMAKE_AFTER=(
+    '-DWHISPER_BUILD_TESTS=OFF'
+    '-DWHISPER_USE_SYSTEM_GGML=ON'
+)
+
+# FIXME: fix riscv64 build
+# lto1: fatal error: target specific builtin not available
+# /usr/bin/ld: error: lto-wrapper failed
+NOLTO__RISCV64=1

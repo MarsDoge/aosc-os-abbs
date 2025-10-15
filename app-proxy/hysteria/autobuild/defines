@@ -1,0 +1,7 @@
+PKGNAME=hysteria
+PKGSEC=net
+PKGDES="A multi-protocol network proxy"
+PKGDEP="glibc"
+BUILDDEP="git go"
+
+GO_LDFLAGS=("-X github.com/apernet/hysteria/app/v2/cmd.appVersion=v$PKGVER")

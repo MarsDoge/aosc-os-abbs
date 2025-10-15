@@ -1,0 +1,16 @@
+abinfo "Setting build tags ..."
+TAGS=(
+    "with_quic"
+    "with_grpc"
+    "with_dhcp"
+    "with_wireguard"
+    "with_utls"
+    "with_acme"
+    "with_clash_api"
+    "with_v2ray_api"
+    "with_gvisor"
+    "with_tailscale"
+)
+GO_BUILD_AFTER=(
+    -tags "${TAGS[*]}"
+)

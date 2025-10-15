@@ -22,6 +22,8 @@ AUTOTOOLS_AFTER="--disable-debug
 AUTOTOOLS_AFTER__LOONGARCH64=" \
                  ${AUTOTOOLS_AFTER} \
                  --enable-linker=bfd"
+AUTOTOOLS_AFTER__LOONGARCH64_NOSIMD=" \
+                 ${AUTOTOOLS_AFTER__LOONGARCH64}"
 AUTOTOOLS_AFTER__LOONGSON3=" \
                  ${AUTOTOOLS_AFTER} \
                  --target=mips64el-aosc-linux-gnuabi64 \
@@ -41,6 +43,3 @@ AB_FLAGS_SPECS__PPC64=0
 
 NOLTO=1
 ABSPLITDBG=0
-
-# FIXME: Not supported yet.
-FAIL_ARCH="(mips64r6el)"

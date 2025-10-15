@@ -1,5 +1,10 @@
-VER=1.44.1
-SRCS="tbl::https://github.com/denoland/deno/releases/download/v$VER/deno_src.tar.gz"
-CHKSUMS="sha256::9fb530b85dc795310ee9e0c4edd2dbfa722d2489a3b7bebc9a4078c2d2f67594"
-SUBDIR=deno
+VER=2.5.4
+# Note: This must match "v8" version in Cargo.lock.
+RUSTY_V8_VER=140.2.0
+SRCS="tbl::https://github.com/denoland/deno/releases/download/v$VER/deno_src.tar.gz \
+      git::commit=tags/v${RUSTY_V8_VER};rename=rusty_v8::https://github.com/denoland/rusty_v8.git"
+CHKSUMS="sha256::d92d0c2b85f016769dcc2f0b86ae03861d2303bb165aac4c7911559c052301ca \
+         SKIP"
+SUBDIR="deno"
 CHKUPDATE="anitya::id=133196"
+ENVREQ__ARM64="total_mem=30"

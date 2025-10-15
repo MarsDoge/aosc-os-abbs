@@ -1,8 +1,10 @@
 PKGNAME=txaio
 PKGSEC=python
-PKGDEP="six"
-BUILDDEP="setuptools"
+PKGDEP="six python-3"
+BUILDDEP="setuptools setuptools-python3"
 PKGDES="Compatibility API between asyncio/Twisted/Trollius"
+
+NOPYTHON2=1
 
 ABHOST=noarch
 ABTYPE=python

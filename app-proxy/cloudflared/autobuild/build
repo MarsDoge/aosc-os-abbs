@@ -1,0 +1,5 @@
+abinfo "Building Cloudflared ..."
+make cloudflared PREFIX=$PKGDIR/usr PACKAGE_MANAGER=oma
+
+abinfo "Installing Cloudflared ..."
+make install PREFIX=$PKGDIR/usr PACKAGE_MANAGER=oma

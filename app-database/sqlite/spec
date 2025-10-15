@@ -1,6 +1,6 @@
-VER=3.46.1
-LOCAL_VER=3450100
-YEAR=2024
-SRCS="tbl::https://sqlite.org/$YEAR/sqlite-src-$LOCAL_VER.zip"
-CHKSUMS="sha256::7f7b14a68edbcd4a57df3a8c4dbd56d2d3546a6e7cdd50de40ceb03af33d34ba"
+UPSTREAM_VER=3500400
+VER=3.50.4
+YEAR=2025
+SRCS="tbl::https://sqlite.org/$YEAR/sqlite-src-$UPSTREAM_VER.zip"
+CHKSUMS="sha256::b7b4dc060f36053902fb65b344bbbed592e64b2291a26ac06fe77eec097850e9"
 CHKUPDATE="anitya::id=4877"

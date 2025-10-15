@@ -1,4 +1,4 @@
-VER=3.107
+VER=3.113
 SRCS="https://archive.mozilla.org/pub/security/nss/releases/NSS_${VER//./_}_RTM/src/nss-$VER.tar.gz"
-CHKSUMS="sha256::7f7e96473e38150771a615f5d40e8c41ba3a19385301ae0c525091f2fc9d6729"
+CHKSUMS="sha256::acef06b512d3bd81c87a63b3c8653d258bb689d2191fc0e64decf5a1efa01c0f"
 CHKUPDATE="anitya::id=2503"

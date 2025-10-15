@@ -14,6 +14,7 @@ OPENJDK_SUFFIX="-23"
 [ "${CROSS:-$ARCH}" = "loongson3" ] && export DEBIAN_ARCH="mips64el"
 [ "${CROSS:-$ARCH}" = "riscv64" ] && export DEBIAN_ARCH="riscv64" JDK_HAS_JIT=y
 [ "${CROSS:-$ARCH}" = "loongarch64" ] && export LOONGARCH64_BOOT="y" JDK_HAS_JIT=y
+[ "${CROSS:-$ARCH}" = "loongarch64_nosimd" ] && export LOONGARCH64_BOOT="y" JDK_HAS_JIT=y
 
 if [[ -z "${JDK_HAS_JIT:-}" ]]; then
     config_zero="--with-jvm-variants=zero --enable-precompiled-headers"
@@ -79,14 +80,13 @@ mkdir -p "$PKGDIR"/usr/src/openjdk
 mv "$PKGDIR"/usr/lib/java/lib/src.zip "$PKGDIR"/usr/src/openjdk/src.zip
 ln -sv /usr/src/openjdk"$OPENJDK_SUFFIX"/src.zip "$PKGDIR"/usr/lib/java/lib/src.zip
 
-mkdir -p "$PKGDIR"/etc/ssl/certs/java
-mv -v "$PKGDIR"/usr/lib/java/lib/security/cacerts "$PKGDIR"/etc/ssl/certs/java/
-
-ln -sfv /etc/ssl/certs/java"$OPENJDK_SUFFIX"/cacerts "$PKGDIR"/usr/lib/java/lib/security/cacerts
+abinfo "Linking system CA certificate store ..."
+rm -fv "$PKGDIR"/usr/lib/java/lib/security/cacerts
+ln -sfv ../../../../../etc/ssl/certs/java/cacerts "$PKGDIR"/usr/lib/java/lib/security/cacerts
 
 if [[ -n "$OPENJDK_SUFFIX" ]]; then
     abinfo "Renaming for openjdk suffix ..."
-    for path in "$PKGDIR"{/etc/openjdk,/usr/lib/java,/etc/ssl/certs/java,/usr/share/doc/openjdk,/usr/src/openjdk}; do
+    for path in "$PKGDIR"{/etc/openjdk,/usr/lib/java,/usr/share/doc/openjdk,/usr/src/openjdk}; do
         mv -vf "$path" "$path""$OPENJDK_SUFFIX"
     done
     mv -vf "$PKGDIR"/usr/share/man/man1 "$PKGDIR"/usr/share/man/man1openjdk"$OPENJDK_SUFFIX"

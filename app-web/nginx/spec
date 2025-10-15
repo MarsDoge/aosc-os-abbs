@@ -1,4 +1,12 @@
-VER=1.27.4
-SRCS="tbl::https://nginx.org/download/nginx-$VER.tar.gz"
-CHKSUMS="sha256::294816f879b300e621fa4edd5353dd1ec00badb056399eceb30de7db64b753b2"
+NGINX_VER=1.28.0
+BROTLI_VER=1.0.0~rc1+git20231009
+VER="${NGINX_VER}+brotli${BROTLI_VER}"
+# Note: After v1.0.0rc, there are still some necessary updates (including upstream submodules), 
+# so the following commit refers to the latest one in master branch.
+SRCS="tbl::https://nginx.org/download/nginx-$NGINX_VER.tar.gz \
+      git::commit=a71f9312c2deb28875acc7bacfdd5695a111aa53;rename=ngx_brotli::https://github.com/google/ngx_brotli.git"
+CHKSUMS="sha256::c6b5c6b086c0df9d3ca3ff5e084c1d0ef909e6038279c71c1c3e985f576ff76a \
+         SKIP"
 CHKUPDATE="anitya::id=5413"
+SUBDIR="nginx-$NGINX_VER"
+

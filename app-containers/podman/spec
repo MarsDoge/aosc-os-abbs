@@ -1,4 +1,5 @@
-UPSTREAM_VER=5.4.2
+UPSTREAM_VER=5.5.2
+REL=3
 # Find gvisor-tap-vsock version at:
 #
 # https://github.com/containers/podman/blob/v$PKGVER/contrib/pkginstaller/Makefile
@@ -10,4 +11,3 @@ CHKSUMS="SKIP \
          SKIP"
 CHKUPDATE="anitya::id=93284"
 SUBDIR="podman-$UPSTREAM_VER"
-REL=1

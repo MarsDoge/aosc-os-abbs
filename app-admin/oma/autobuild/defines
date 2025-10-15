@@ -1,23 +1,12 @@
 PKGNAME="oma"
 PKGDES="Default package management interface"
-PKGDEP="aosc-os-feature-data apt bzip2 gcc-runtime gmp \
-        nettle openssl systemd xz glibc ripgrep zstd \
-        aosc-os-repository-data aosc-os-keyring"
-PKGDEP__LOONGSON3="${PKGDEP/gmp/} openssl"
+PKGDEP="aosc-os-feature-data apt bzip2 gcc-runtime gmp nettle openssl \
+        systemd xz glibc ripgrep zstd aosc-os-repository-data \
+        aosc-os-repository-template aosc-os-keyring"
 BUILDDEP="rustc llvm"
 PKGSEC="admin"
 PKGBREAK="mirrormgr<=0.11.1"
 PKGREP="mirrormgr<=0.11.1"
 
-# FIXME: nettle-sys does not build on loongson3 due to LLVM brokenness.
-# Use openssl backend for sequoia-openpgp, which is used by oma-refresh.
-CARGO_AFTER__LOONGSON3="--no-default-features \
-                        --features=aosc,sequoia-openssl-backend"
-
 USECLANG=1
-
-# FIXME: ld.lld is not yet available.
-NOLTO__LOONGSON3=1
-NOLTO__MIPS64R6EL=1
-
 PKGESS=1

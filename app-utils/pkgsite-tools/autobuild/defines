@@ -1,0 +1,8 @@
+PKGNAME=pkgsite-tools
+PKGSEC=utils
+PKGDEP="glibc"
+BUILDDEP="rustc llvm"
+PKGDES="AOSC Packages Site utilities"
+
+ABTYPE=rust
+USECLANG=1

@@ -1,0 +1,75 @@
+From b3cbf4ecd4ae50520b8c106caa1875392f28e01f Mon Sep 17 00:00:00 2001
+From: "Richard W.M. Jones" <rjones@redhat.com>
+Date: Tue, 20 Mar 2012 10:51:23 +0000
+Subject: [PATCH 08/10] BACKPORT: libfuse: don't force -D_FILE_OFFSET_BITS=64
+ in pkgconfig file.
+
+FUSE_CFLAGS defines -D_FILE_OFFSET_BITS=64.  There are three problems
+with this:
+
+(1) A larger program using libfuse might have modules compiled with
+and without FUSE_CFLAGS, which, if LFS is not enabled and the platform
+is 32 bit, would result in a fatal mix of 32 and 64 bit off_t.  (This
+would, of course, be a bug, but I think there is a better way to
+detect this -- see below)
+
+(2) Programs may need to be adjusted to support LFS.  It's the
+intention of the LFS standard that the _programmer_ enables LFS once
+the program has been checked/adjusted.
+
+(3) _FILE_OFFSET_BITS does not need to be defined at all on 64 bit
+Linux.  64 bit off_t is the default there.
+
+So I think it's better not to force -D_FILE_OFFSET_BITS=64, and
+because of (3) I also think you shouldn't test for it.
+
+However off_t must still be 64 bits, so how to enforce that?  C1X will
+define static assertions[1], and these can be used to check the size
+of off_t.
+
+Not all compilers support static assertions yet, although several do.
+Therefore I have surrounded the static assertion with a conservative
+check that the compiler is GCC >= 4.6.  In the long run, this test can
+be removed and you can just use 'static_assert'.
+---
+ include/fuse_common.h | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
+
+diff --git a/include/fuse_common.h b/include/fuse_common.h
+index a4d980d..a5a6830 100644
+--- a/include/fuse_common.h
++++ b/include/fuse_common.h
+@@ -28,11 +28,6 @@
+ #define FUSE_MAKE_VERSION(maj, min)  ((maj) * 10 + (min))
+ #define FUSE_VERSION FUSE_MAKE_VERSION(FUSE_MAJOR_VERSION, FUSE_MINOR_VERSION)
+ 
+-/* This interface uses 64 bit off_t */
+-#if _FILE_OFFSET_BITS != 64
+-#error Please add -D_FILE_OFFSET_BITS=64 to your compile flags!
+-#endif
+-
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+@@ -502,4 +497,18 @@ void fuse_remove_signal_handlers(struct fuse_session *se);
+ }
+ #endif
+ 
++
++/*
++ * This interface uses 64 bit off_t.
++ *
++ * On 32bit systems please add -D_FILE_OFFSET_BITS=64 to your compile flags!
++ */
++
++#if defined(__GNUC__) && (__GNUC__ > 4 || __GNUC__ == 4 && __GNUC_MINOR__ >= 6) && !defined __cplusplus
++_Static_assert(sizeof(off_t) == 8, "fuse: off_t must be 64bit");
++#else
++struct _fuse_off_t_must_be_64bit_dummy_struct \
++	{ unsigned _fuse_off_t_must_be_64bit:((sizeof(off_t) == 8) ? 1 : -1); };
++#endif
++
+ #endif /* _FUSE_COMMON_H_ */
+-- 
+2.49.0
+

@@ -1,0 +1,30 @@
+From 2ff97b246d38f97a3440d3c4e28097eed04f0b15 Mon Sep 17 00:00:00 2001
+From: Icenowy Zheng <uwu@icenowy.me>
+Date: Thu, 27 Mar 2025 15:24:13 +0800
+Subject: [PATCH 3/6] AOSCOS: fix compatibility with CGAL 5.2 or newer
+
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+---
+ src/libslic3r/CutSurface.cpp | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/src/libslic3r/CutSurface.cpp b/src/libslic3r/CutSurface.cpp
+index c229ff246b..cd1f84bec0 100644
+--- a/src/libslic3r/CutSurface.cpp
++++ b/src/libslic3r/CutSurface.cpp
+@@ -4094,8 +4094,10 @@ void priv::store(const Emboss::IProjection &projection,
+ 
+ bool Slic3r::corefine_test(const std::string &model_path, const std::string &shape_path) {
+     priv::CutMesh model, shape;
+-    if (!CGAL::IO::read_OFF(model_path, model)) return false;
+-    if (!CGAL::IO::read_OFF(shape_path, shape)) return false;
++    std::ifstream model_stream(model_path),
++                  shape_stream(shape_path);
++    if (!CGAL::read_off(model_stream, model)) return false;
++    if (!CGAL::read_off(shape_stream, shape)) return false;
+         
+     CGAL::Polygon_mesh_processing::corefine(model, shape);
+     return true;
+-- 
+2.50.1
+

@@ -1,10 +1,10 @@
-UPSTREAM_VER=12.8.1
-MIN_DRIVER_VER=570.124.06
+UPSTREAM_VER=13.0.2
+MIN_DRIVER_VER=580.95.05
 VER=${UPSTREAM_VER}+${MIN_DRIVER_VER}
 CHKUPDATE="anitya::id=13462"
 
 SRCS__AMD64="file::rename=cuda_${VER/+/_}_linux.run::https://developer.download.nvidia.com/compute/cuda/${UPSTREAM_VER}/local_installers/cuda_${VER/+/_}_linux.run"
-CHKSUMS__AMD64="sha256::228f6bcaf5b7618d032939f431914fc92d0e5ed39ebe37098a24502f26a19797"
+CHKSUMS__AMD64="sha256::81a5d0d0870ba2022efb0a531dcc60adbdc2bbff7b3ef19d6fd6d8105406c775"
 
 SRCS__ARM64="file::rename=cuda_${VER/+/_}_linux.run::https://developer.download.nvidia.com/compute/cuda/${UPSTREAM_VER}/local_installers/cuda_${VER/+/_}_linux_sbsa.run"
-CHKSUMS__ARM64="sha256::353cbab1b57282a1001071796efd95c1e40ec27a3375e854d12637eaa1c6107c"
+CHKSUMS__ARM64="sha256::93ab4c77ae2bc0f1f600ef48ccd3ff25a3203a6a6161a84511a33cbf5b5621fc"

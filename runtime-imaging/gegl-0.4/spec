@@ -1,6 +1,5 @@
-UPSTREAM_VER=0_4_48
-VER="${UPSTREAM_VER//_/.}"
-REL=3
+VER=0.4.62
 SRCS="tbl::https://download.gimp.org/pub/gegl/${VER:0:3}/gegl-$VER.tar.xz"
-CHKSUMS="sha256::418c26d94be8805d7d98f6de0c6825ca26bd74fcacb6c188da47533d9ee28247"
+CHKSUMS="sha256::5887576371ebf1d9e90797d10e4b9a7f1658228d4827583e79e1db3d94505c6c"
 CHKUPDATE="anitya::id=229510"
+REL=1

@@ -2,15 +2,11 @@ PKGNAME=niri
 PKGSEC=x11
 PKGDEP="bash cairo gcc-runtime glib glibc gnome-keyring libdisplay-info \
         libinput libxkbcommon mesa pango pipewire pixman seatd systemd \
-        wayland xdg-desktop-portal-gtk xdg-desktop-portal-gnome"
-PKGRECOM="alacritty fuzzel swaylock xwayland-satellite"
+        wayland xdg-desktop-portal-gtk xdg-desktop-portal-gnome xwayland-satellite orca"
+PKGRECOM="alacritty fuzzel swaylock waybar brightnessctl"
 PKGSUG="mako-notification-daemon swaybg swayidle"
 BUILDDEP="rustc llvm"
 PKGDES="Scrollable-tiling Wayland compositor"
 USECLANG=1
 ABTYPE=rust
-
-# FIXME: ld.lld is not yet available for loongson3.
-# ld.lld: error: relocation R_MIPS_64 cannot be used against local symbol; 
-# recompile with -fPIC
-NOLTO__LOONGSON3=1
+FAIL_ARCH="(loongarch64_nosimd)"

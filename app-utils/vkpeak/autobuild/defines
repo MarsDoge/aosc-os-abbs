@@ -1,5 +1,6 @@
 PKGNAME=vkpeak
 PKGSEC=utils
-PKGDEP="vulkan-loader"
-BUILDDEP="vulkan-headers"
 PKGDES="Measure peak performance using Vulkan"
+
+# FIXME: lto1: fatal error: target specific builtin not available
+NOLTO__RISCV64=1

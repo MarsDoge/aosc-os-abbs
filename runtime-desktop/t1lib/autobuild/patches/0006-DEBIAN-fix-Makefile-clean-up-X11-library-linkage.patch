@@ -1,0 +1,72 @@
+From 54df6f5fb706a2caabea76e87015f4b6b16f7b1d Mon Sep 17 00:00:00 2001
+From: Mingcong Bai <jeffbai@aosc.io>
+Date: Sun, 25 May 2025 15:27:11 +0800
+Subject: [PATCH 6/8] DEBIAN: fix(Makefile): clean up X11 library linkage
+
+Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
+---
+ lib/Makefile.in      | 4 ++--
+ type1afm/Makefile.in | 2 +-
+ xglyph/Makefile.in   | 4 ++--
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/lib/Makefile.in b/lib/Makefile.in
+index 89e5e86..973c734 100644
+--- a/lib/Makefile.in
++++ b/lib/Makefile.in
+@@ -24,7 +24,7 @@ OPTIONS   = @OPTIONS@
+ X_LIBS    = @X_LIBS@
+ TOPSRC    = @top_srcdir@
+ XPM_LIB   = -lXpm
+-XLIB      = @X_PRE_LIBS@ -lXext -lX11 @X_EXTRA_LIBS@
++XLIB      = -lX11
+ LDFLAGS   = @LDFLAGS@
+ LDLIBS    = @LDLIBS@
+ AR        = ar rc
+@@ -137,7 +137,7 @@ libt1x.la: $(T1LIBX_OBJS)
+ 	$(LIBTOOL) --mode=link \
+ 		$(CC) $(LDFLAGS) -o $@ $(T1LIBX_OBJS) \
+ 	         -version-info @T1LIB_LT_CURRENT@:@T1LIB_LT_REVISION@:@T1LIB_LT_AGE@ \
+-	         libt1.la $(X_LIBS) $(XPM_LIB) $(XLIB)  -no-undefined -rpath $(libdir) 
++	         libt1.la $(X_LIBS) $(XLIB)  -no-undefined -rpath $(libdir) 
+ 	cp t1lib/t1libx.h .
+ 
+ 
+diff --git a/type1afm/Makefile.in b/type1afm/Makefile.in
+index 61611e1..235d68e 100644
+--- a/type1afm/Makefile.in
++++ b/type1afm/Makefile.in
+@@ -70,7 +70,7 @@ all: type1afm
+ 
+ type1afm: $(OBJS) ../lib/t1lib.h
+ 	$(LIBTOOL) --mode=link \
+-		$(CC) -o type1afm $(LDFLAGS) $(OBJS) $(T1LIB) $(LDLIBS)
++		$(CC) -o type1afm $(LDFLAGS) $(OBJS) $(T1LIB)
+ 
+ .SUFFIXES: .lo
+ .c.lo:
+diff --git a/xglyph/Makefile.in b/xglyph/Makefile.in
+index 8da9b63..38bceb1 100644
+--- a/xglyph/Makefile.in
++++ b/xglyph/Makefile.in
+@@ -24,7 +24,7 @@ OPTIONS   = @OPTIONS@
+ X_LIBS    = @X_LIBS@
+ TOPSRC    = @top_srcdir@
+ XPM_LIB   = -lXpm
+-XLIB      = @X_PRE_LIBS@ -lXext -lX11 @X_EXTRA_LIBS@
++XLIB      = -lX11 @X_EXTRA_LIBS@
+ LDFLAGS   = @LDFLAGS@
+ LDLIBS    = @LDLIBS@ 
+ AR        = ar rc
+@@ -65,7 +65,7 @@ SRCS = \
+ 
+ T1LIB  = ../lib/libt1.la
+ T1LIBX = ../lib/libt1x.la
+-XAWLIB = -lXaw -lXt -lXmu
++XAWLIB = -lXaw -lXt
+ 
+ 
+ all: xglyph
+-- 
+2.49.0
+

@@ -1,7 +1,8 @@
 PKGNAME=pyacoustid
 PKGSEC=python
-PKGDEP="python-2 chromaprint"
+PKGDEP="python-3 chromaprint"
+BUILDDEP="setuptools-python3"
 PKGDES="Bindings for Chromaprint acoustic fingerprinting and the Acoustid API"
 
-NOPYTHON3=1
+NOPYTHON2=1
 ABHOST=noarch

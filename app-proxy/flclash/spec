@@ -1,0 +1,5 @@
+VER=0.8.90
+SRCS="git::commit=tags/aosc/v$VER::https://github.com/AOSC-Tracking/FlClash"
+CHKSUMS="SKIP"
+CHKUPDATE="anitya::id=383523"
+REL=1

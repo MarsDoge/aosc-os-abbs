@@ -1,5 +1,4 @@
-VER=2.43.1
-REL=2
-SRCS="tbl::https://ftp.gnu.org/gnu/binutils/binutils-$VER.tar.xz"
-CHKSUMS="sha256::13f74202a3c4c51118b797a39ea4200d3f6cfbe224da6d1d95bb938480132dfd"
+VER=2.45
+SRCS="tbl::https://mirrors.tuna.tsinghua.edu.cn/gnu/binutils/binutils-$VER.tar.xz"
+CHKSUMS="sha256::c50c0e7f9cb188980e2cc97e4537626b1672441815587f1eab69d2a1bfbef5d2"
 CHKUPDATE="anitya::id=7981"

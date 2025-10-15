@@ -1,7 +1,7 @@
-From b78c0d49e427ab0aaf6e395ac4cca1d80213b31f Mon Sep 17 00:00:00 2001
+From a949da6a9ad00303fa2b04b038e50b911e49d094 Mon Sep 17 00:00:00 2001
 From: Mingcong Bai <jeffbai@aosc.io>
 Date: Tue, 9 Apr 2024 22:04:57 +0800
-Subject: [PATCH 04/10] fix(core/launcher.cpp): revert to old HiDPI handling
+Subject: [PATCH 04/13] fix(core/launcher.cpp): revert to old HiDPI handling
  behaviour
 
 The current implementation makes icons blurry in Qt 5 builds, whilst
@@ -28,5 +28,5 @@ index e844acf9ee..adb4b80fb6 100644
  
  	if (OptionFractionalScalingEnabled.value()) {
 -- 
-2.49.0
+2.51.0
 

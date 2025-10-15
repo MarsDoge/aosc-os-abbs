@@ -1,12 +1,12 @@
-VER=7.0
+VER=7.7
 SRCS="tbl::https://github.com/subframe7536/maple-font/releases/download/v${VER}/MapleMono-Variable.zip \
       tbl::https://github.com/subframe7536/maple-font/releases/download/v${VER}/MapleMono-TTF.zip \
       tbl::https://github.com/subframe7536/maple-font/releases/download/v${VER}/MapleMono-NF-unhinted.zip \
       tbl::https://github.com/subframe7536/maple-font/releases/download/v${VER}/MapleMono-CN-unhinted.zip \
       tbl::https://github.com/subframe7536/maple-font/releases/download/v${VER}/MapleMono-NF-CN-unhinted.zip"
-CHKSUMS="sha256::1082df38343c0c98b24f08264e883070d973f98048766964fe69df159e0499ef \
-         sha256::1609689e46e7a618b09b11a3ed9d28cdf1ccc29263efef7a83a58cb4c7b7ac8a \
-         sha256::e4fe360470e722fe19378ac3b4458509611cf8d7cf774a874f654e5b62619fe4 \
-         sha256::2f611ab05112f4462636d3acfc22b0aaa40dce4c40660a014fca8dd5d5a2a417 \
-         sha256::c7b66739b0e418c4789cfa4c6c17d17c4e8ce28d7dad9800a50786ebd3fa4d98"
+CHKSUMS="sha256::5a8736d2eca43d0aece94aca28aa0540d644c2d416582ba8e433b6f991cce4a4 \
+         sha256::60793a95a5032b40d5fd734fdbc06a7aba1e9f80a328a1ed8a8fb2f0372650e4 \
+         sha256::6e237b3c671d9dce2f6e32c027c80ff7e8e6b94f19989010190f653e2d3bbe8b \
+         sha256::b39143c70724a1b7c8deb67b64c12464f86de23770cdd9c87811fd1b9383d6ee \
+         sha256::b8cb09527237cf1cfff6db395d8dee861e522b50932bb31f6559c54b78619202"
 CHKUPDATE="anitya::id=375863"

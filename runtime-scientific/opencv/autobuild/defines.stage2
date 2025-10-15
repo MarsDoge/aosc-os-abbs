@@ -7,7 +7,6 @@ BUILDDEP="beautifulsoup4 eigen-3 gflags glog glu jasper lapack \
           libcl libglvnd libgphoto2 libraw1394 libtheora libtool libvorbis \
           swig v4l-utils vulkan-headers"
 BUILDDEP__RISCV64="${BUILDDEP/apache-ant/}"
-BUILDDEP__MIPS64R6EL="${BUILDDEP/apache-ant/}"
 PKGDES="Open Source Computer Vision Library"
 
 PKGBREAK="caffe-cpu<=1.0-15 digikam<=7.6.0 frei0r-plugins<=1.7.0 \

@@ -32,11 +32,9 @@ runtime-desktop/qt-5
 runtime-network/dpdk
 app-network/freerdp
 runtime-database/freetds
-desktop-gnome/gnome-vfs
 app-web/lynx
 app-web/httpd
 app-web/postfix
-app-web/uw-imap
 app-devel/php
 app-devel/php7
 app-network/grpc
@@ -70,7 +68,6 @@ app-penetration/aircrack-ng
 app-utils/aosc-findupdate
 app-utils/aoscbootstrap
 app-admin/aoscdk-rs
-app-admin/apt-gen-list
 app-imaging/argyllcms
 app-admin/atm
 app-web/axel
@@ -213,7 +210,6 @@ desktop-trinity/smartcardauth-trinity
 app-network/smartdns
 app-network/socat
 runtime-web/sofia-sip
-app-web/sozu
 app-network/spamassassin
 runtime-virtualization/spice
 app-database/sqlcipher
@@ -225,7 +221,6 @@ app-admin/sssd
 app-network/stunnel
 app-multimedia/sunshine
 app-games/supertuxkart
-app-web/sylpheed
 app-network/synergy
 app-games/taisei
 app-admin/tarsnap

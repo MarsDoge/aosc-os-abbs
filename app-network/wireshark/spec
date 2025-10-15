@@ -1,4 +1,5 @@
-VER=4.4.0
+VER=4.4.9
 SRCS="tbl::https://www.wireshark.org/download/src/all-versions/wireshark-$VER.tar.xz"
-CHKSUMS="sha256::ead5cdcc08529a2e7ce291e01defc3b0f8831ba24c938db0762b1ebc59c71269"
+CHKSUMS="sha256::60551dc787f41e87aeaa1e9c33304f9008037e3baf9fa11aef9c2d584cc0b54b"
 CHKUPDATE="anitya::id=5137"
+REL=1

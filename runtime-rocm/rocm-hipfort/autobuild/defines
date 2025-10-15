@@ -1,0 +1,23 @@
+PKGNAME=rocm-hipfort
+PKGDES="Fortran interfaces for ROCm libraries"
+PKGSEC=devel
+PKGDEP="rocm-llvm rocm-clr rocm-cmake gcc"
+BUILDDEP="cmake"
+
+# Note: No ELF files.
+ABSPLITDBG=0
+
+USECLANG=1
+ABTYPE=cmakeninja
+CMAKE_AFTER=(
+    '-DCMAKE_INSTALL_PREFIX=/usr/lib/rocm'
+    '-DCMAKE_C_COMPILER=/usr/lib/rocm/lib/llvm/bin/clang'
+    '-DCMAKE_CXX_COMPILER=/usr/lib/rocm/lib/llvm/bin/clang++'
+    '-DCMAKE_Fortran_COMPILER=/usr/lib/rocm/lib/llvm/bin/flang'
+    '-DCMAKE_SKIP_INSTALL_RPATH=OFF'
+    '-DCMAKE_PREFIX_PATH=/usr/lib/rocm'
+    '-DCMAKE_LINKER_TYPE=LLD'
+    '-DCMAKE_BUILD_TYPE=RELEASE'
+)
+
+FAIL_ARCH="!(amd64|arm64|loongarch64)"

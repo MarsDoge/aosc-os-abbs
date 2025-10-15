@@ -1,7 +1,9 @@
 PKGNAME=ibus-sunpinyin
 PKGSEC=x11
-PKGDEP="sunpinyin sunpinyin-data ibus pygtk"
+PKGDEP="sunpinyin sunpinyin-data ibus pygobject-3"
 BUILDDEP="scons"
 PKGDES="IBus wrapper for Sunpinyin"
 
 PKGEPOCH=1
+
+FAIL_ARCH="!(amd64|arm64|loongson3|ppc64el)"

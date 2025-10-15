@@ -1,0 +1,29 @@
+From 78edbbd91a7f3ffe8710c97bc85520c55993061c Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Fri, 23 Nov 2018 18:11:12 +0100
+Subject: [PATCH 2/3] Fix build with -Wl,--as-needed
+
+Fails with "x86_64-pc-linux-gnu-ld: ../sasldb/.libs/libsasldb.a(db_gdbm.o):
+in function `_sasldb_getdata': db_gdbm.c:(.text+0xcf): undefined
+reference to `gdbm_open'..." otherwise.
+
+Signed-off-by: Heiko Becker <heirecka@exherbo.org>
+---
+ sasldb/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sasldb/Makefile.am b/sasldb/Makefile.am
+index 97f4a5be..067f0ac8 100644
+--- a/sasldb/Makefile.am
++++ b/sasldb/Makefile.am
+@@ -54,6 +54,6 @@ noinst_LTLIBRARIES = libsasldb.la
+ 
+ libsasldb_la_SOURCES = allockey.c sasldb.h
+ EXTRA_libsasldb_la_SOURCES = $(extra_common_sources)
+-libsasldb_la_DEPENDENCIES = $(SASL_DB_BACKEND)
++libsasldb_la_DEPENDENCIES = $(SASL_DB_BACKEND) $(SASL_DB_LIB)
+ libsasldb_la_LIBADD = $(SASL_DB_BACKEND) $(SASL_DB_LIB)
+ libsasldb_la_LDFLAGS = -no-undefined
+-- 
+2.43.0
+

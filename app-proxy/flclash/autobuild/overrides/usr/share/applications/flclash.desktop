@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=FlClash
+GenericName=FlClash
+Icon=flclash
+Exec=flclash %U
+Categories=Network;
+Keywords=FlClash;Clash;ClashMeta;Proxy;
+StartupNotify=true
+StartupWMClass=com.follow.clash

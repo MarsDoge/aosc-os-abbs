@@ -1,0 +1,6 @@
+PKGNAME=gost
+PKGSEC=net
+PKGDEP="glibc"
+BUILDDEP="go"
+PKGDES="GO Simple Tunnel"
+ABSPLITDBG=0

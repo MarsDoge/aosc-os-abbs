@@ -1,5 +1,6 @@
-VER=25.02
-SRCS="git::commit=tags/v$VER::https://github.com/YaLTeR/niri"
+VER=25.08
+REL=1
+# Note: copy-repo is required for the build system to detect commit hash
+SRCS="git::commit=tags/v$VER;copy-repo=true::https://github.com/YaLTeR/niri"
 CHKSUMS="SKIP"
 CHKUPDATE="anitya::id=372826"
-REL=2

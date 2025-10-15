@@ -1,0 +1,11 @@
+abinfo "Building asar ..."
+npm i --force --verbose
+npm run build --verbose
+
+abinfo "Installing asar ..."
+npm install \
+    --verbose \
+    --install-links \
+    --global \
+    --prefix "${PKGDIR}"/usr \
+    "${SRCDIR}"

@@ -1,0 +1,33 @@
+abinfo "Mapping Dart SDK architecture ..."
+if ab_match_arch amd64; then
+    export DART_ARCH="x64" DART_OUT="${SRCDIR}/out/ReleaseX64"
+elif ab_match_arch armv7hf; then
+    export DART_ARCH="arm" DART_OUT="${SRCDIR}/out/ReleaseARM"
+elif ab_match_arch arm64; then
+    export DART_ARCH="arm64" DART_OUT="${SRCDIR}/out/ReleaseARM64"
+elif ab_match_arch riscv64; then
+    export DART_ARCH="riscv64" DART_OUT="${SRCDIR}/out/ReleaseRISCV64"
+fi
+
+abinfo "Initializing empty git logs for build compatibility ..."
+mkdir -pv ${SRCDIR}/.git/logs
+echo '' > ${SRCDIR}/.git/logs/HEAD
+
+abinfo "Generating package config and SDK version files ..."
+python3 ${SRCDIR}/tools/generate_package_config.py
+python3 ${SRCDIR}/tools/generate_sdk_version_file.py
+
+abinfo "Updating version timestamp ..."
+sed -i 's/Unknown timestamp/'"$(date -uIm)"'/' ${SRCDIR}/tools/make_version.py
+
+for _lib in icu zlib; do
+    abinfo "Removing buildscripts for system provided $_lib ..."
+    find . -type f -path "*third_party/$_lib/*" \
+        \! -path "*third_party/$_lib/chromium/*" \
+        \! -path "*third_party/$_lib/google/*" \
+        \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
+        -delete
+done
+
+abinfo "Replacing GN build files to use system ICU and zlib ..."
+python3 ${SRCDIR}/build/linux/unbundle/replace_gn_files.py --system-libraries icu zlib

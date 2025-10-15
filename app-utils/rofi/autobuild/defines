@@ -4,11 +4,14 @@ PKGDEP="freetype libxdg-basedir libxkbcommon pango startup-notification \
         xcb-util-wm xcb-util-xrm librsvg cairo xcb-util-cursor glib gdk-pixbuf \
         xcb-util-keysyms xcb-util libxcb xcb-imdkit"
 PKGDES="A pop-up window switcher"
+PKGCONFL="rofi-wayland"
 
 ABTYPE=meson
 MESON_AFTER=(
-    -Ddrun=true
-    -Dwindow=true
-    -Dcheck=disabled
-    -Dimdkit=true
+    '-Ddrun=true'
+    '-Dwindow=true'
+    '-Dcheck=disabled'
+    '-Dimdkit=true'
+    '-Dwayland=enabled'
+    '-Dxcb=enabled'
 )

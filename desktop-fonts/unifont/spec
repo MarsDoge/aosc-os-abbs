@@ -1,4 +1,4 @@
-VER=16.0.02
+VER=17.0.01
 SRCS="tbl::https://ftp.gnu.org/gnu/unifont/unifont-$VER/unifont-$VER.tar.gz"
-CHKSUMS="sha256::f128ec8763f2264cd1fa069f3195631c0b1365366a689de07b1cb82387aba52d"
+CHKSUMS="sha256::234af86e7a0e851f020900db5ad0afc32691c248db362df9b2914cf50c42d940"
 CHKUPDATE="anitya::id=14916"

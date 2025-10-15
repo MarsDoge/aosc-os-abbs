@@ -1,10 +1,8 @@
 PKGNAME="zed"
 PKGDES="A general-purpose, multiplayer code editor"
 PKGSEC=devel
-PKGDEP="gcc-runtime alsa-lib zstd openssl zlib libxcb libxkbcommon curl \
-        glibc libxau libxdmcp nghttp3 nghttp2 libidn2 rtmpdump libssh2 \
-        libpsl krb5 brotli icu libunistring keyutils e2fsprogs"
-BUILDDEP="rustc llvm"
+PKGDEP="alsa-lib gcc-runtime glibc libxcb libxkbcommon x11-lib zlib"
+BUILDDEP="rustc llvm mold"
 
 # FIXME: Limited by wasmtime support.
 #
@@ -15,5 +13,9 @@ FAIL_ARCH="!(amd64|arm64)"
 
 USECLANG=1
 
-CARGO_AFTER="--package zed \
-             --package cli"
+CARGO_AFTER=("--package" "zed" "--package" "cli" "-p")
+
+# FIXME: lto fail with rustc>=1.90
+# mold: error: undefined symbol: aws_lc_0_29_0_AES_set_decrypt_key
+# = note: ld.lld: error: undefined symbol: aws_lc_0_29_0_EVP_parse_private_key
+NOLTO=1

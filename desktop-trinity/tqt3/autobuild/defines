@@ -1,11 +1,12 @@
 PKGNAME=tqt3
 PKGSEC=Trinity
 PKGDEP="libjpeg-turbo libmng libpng giflib freetype fontconfig cups glib \
-        e2fsprogs x11-lib mesa unixodbc sqlite postgresql util-linux \
-        glu mariadb glu"
+        e2fsprogs x11-lib mesa unixodbc sqlite postgresql-runtime util-linux \
+        glu mariadb"
 PKGDEP__RETRO=" \
         libjpeg-turbo libmng libpng giflib freetype fontconfig cups glib \
         e2fsprogs x11-lib mesa sqlite glu"
+BUILDDEP="postgresql"
 PKGDEP__ARMV4="${PKGDEP__RETRO}"
 PKGDEP__ARMV6HF="${PKGDEP__RETRO}"
 PKGDEP__ARMV7HF="${PKGDEP__RETRO}"
@@ -21,6 +22,3 @@ NOLTO__LOONGSON2F=1
 NOLTO__LOONGSON3=1
 
 NOLIBTOOL=0
-
-# FIXME: relocation truncated to fit: R_MIPS_CALL16 against `TQCString::~TQCString()'
-NOLTO__MIPS64R6EL=1

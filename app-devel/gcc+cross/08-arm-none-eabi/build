@@ -1,0 +1,81 @@
+abinfo "Clearing compiler flags in environment..."
+unset CFLAGS CXXFLAGS LDFLAGS CPPFLAGS
+
+abinfo "Configuring GCC (target: arm-none-eabi) ..."
+mkdir -pv "$SRCDIR"/build-${__CROSS}
+cd "$SRCDIR"/build-${__CROSS}
+
+# Note: Sync from core-devel/gcc.
+if [[ "${__CROSS}" = "amd64" ]]; then
+    GCC_LANGS="c,c++,fortran,lto,go,objc,obj-c++,m2,d,ada"
+elif [[ "${__CROSS}" = "arm64" ]]; then
+    GCC_LANGS="c,c++,fortran,lto,go,objc,obj-c++,m2,d,ada"
+elif [[ "${__CROSS}" = "loongarch64" ]]; then
+    GCC_LANGS="c,c++,fortran,lto,objc,obj-c++,m2,d"
+elif [[ "${__CROSS}" = "loongson3" ]]; then
+    GCC_LANGS="c,c++,fortran,lto,objc,obj-c++,m2,d"
+elif [[ "${__CROSS}" = "ppc64el" ]]; then
+    GCC_LANGS="c,c++,fortran,lto,go,objc,obj-c++,m2,d,ada"
+elif [[ "${__CROSS}" = "riscv64" ]]; then
+    GCC_LANGS="c,c++,fortran,lto,go,objc,obj-c++,m2,d,ada"
+fi
+
+# Note: Find the common denominator between host and target support.
+if ab_match_arch loongarch64 || \
+   ab_match_arch loongson3; then
+    GCC_LANGS="c,c++,fortran,lto,objc,obj-c++,m2,d"
+fi
+
+if [[ "${__CROSS}" = "arm-none-eabi" ]]; then
+    GCC_LANGS="c,c++"
+fi
+
+SHARED_OPTIONS="""
+    --prefix=/opt/abcross/${__CROSS}
+    --target=arm-none-eabi
+    --disable-shared
+    --enable-multilib
+    --with-multilib-list=aprofile,rmprofile
+    --enable-c99
+    --enable-long-long
+    --disable-threads
+    --enable-languages=${GCC_LANGS}
+    --enable-__cxa_atexit
+    --disable-altivec
+    --disable-fixed-point
+    --enable-lto
+    --enable-gnu-unique-object
+    --enable-linker-build-id
+    --enable-libstdcxx-dual-abi
+    --with-default-libstdcxx-abi=new
+    --with-newlib
+    --with-interwork
+"""
+
+ln -sv "$SRCDIR"/../newlib-${__NEWLIB_VER}/newlib \
+    "$SRCDIR"/newlib
+ln -sv "$SRCDIR"/../newlib-${__NEWLIB_VER}/libgloss \
+    "$SRCDIR"/libgloss
+
+"$SRCDIR"/configure \
+    ${SHARED_OPTIONS} \
+    ${TARGET_OPTIONS}
+
+abinfo "Installing GCC (target: arm-none-eabi) ..."
+make \
+    AS_FOR_TARGET=/opt/abcross/${__CROSS}/bin/arm-none-eabi-as \
+    LD_FOR_TARGET=/opt/abcross/${__CROSS}/bin/arm-none-eabi-ld
+
+abinfo "Installing GCC (target: arm-none-eabi) ..."
+make DESTDIR=$PKGDIR install
+
+abinfo "Dropping texinfo dir index ..."
+rm -v "$PKGDIR"/opt/abcross/${__CROSS}/share/info/dir
+
+abinfo "Creating symlinks to the cross binaries to /usr/bin ..."
+mkdir -pv "$PKGDIR"/usr/bin
+cd "$PKGDIR"/opt/abcross/${__CROSS}/bin
+for i in arm-none-eabi-*; do
+    ln -sv ../../opt/abcross/${__CROSS}/bin/$i \
+        "$PKGDIR"/usr/bin/$i
+done

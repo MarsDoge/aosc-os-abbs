@@ -1,4 +1,4 @@
-VER=0.1.108
-SRCS="tbl::https://download.gimp.org/pub/babl/${VER%.*}/babl-$VER.tar.xz"
-CHKSUMS="sha256::26defe9deaab7ac4d0e076cab49c2a0d6ebd0df0c31fd209925a5f07edee1475"
+VER=0.1.114
+SRCS="tbl::https://download.gimp.org/pub/babl/${VER%.*}/babl-${VER}.tar.xz"
+CHKSUMS="sha256::bcbb7786c1e447703db3bc7fa34d62d0d2d117b22f04d8834c7b2d5ded456487"
 CHKUPDATE="anitya::id=7843"

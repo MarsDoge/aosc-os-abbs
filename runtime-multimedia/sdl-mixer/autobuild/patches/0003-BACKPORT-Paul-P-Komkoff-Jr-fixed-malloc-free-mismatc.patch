@@ -1,0 +1,79 @@
+From 56e9305d9736c4397e397b7964a434f1db146da3 Mon Sep 17 00:00:00 2001
+From: Sam Lantinga <slouken@libsdl.org>
+Date: Sun, 22 Jul 2012 16:13:27 -0700
+Subject: [PATCH 3/6] BACKPORT: Paul P Komkoff Jr fixed malloc/free mismatch in
+ the MikMod driver
+
+Signed-off-by: ilikara <3435193369@qq.com>
+---
+ CHANGES       | 4 ++++
+ dynamic_mod.c | 7 +++++++
+ dynamic_mod.h | 1 +
+ music_mod.c   | 4 ++--
+ 4 files changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/CHANGES b/CHANGES
+index 9eb53f37..c116b3d4 100644
+--- a/CHANGES
++++ b/CHANGES
+@@ -1,3 +1,7 @@
++1.2.13:
++Paul P Komkoff Jr - Sun Jul 22 16:12:28 PDT 2012
++ * Fixed malloc/free mismatch in the MikMod driver
++
+ 1.2.12:
+ Sam Lantinga - Sat Jan 14 22:00:29 2012 -0500
+  * Fixed seek offset with SMPEG (was relative, should be absolute)
+diff --git a/dynamic_mod.c b/dynamic_mod.c
+index 7e3cd0af..df4d64d1 100644
+--- a/dynamic_mod.c
++++ b/dynamic_mod.c
+@@ -93,6 +93,13 @@ int Mix_InitMOD()
+ 			SDL_UnloadObject(mikmod.handle);
+ 			return -1;
+ 		}
++		mikmod.MikMod_free =
++			(void (*)(void*))
++			SDL_LoadFunction(mikmod.handle, "MikMod_free");
++		if ( mikmod.MikMod_free == NULL ) {
++			SDL_UnloadObject(mikmod.handle);
++			return -1;
++		}
+ 		mikmod.Player_Active =
+ 			(BOOL (*)(void))
+ 			SDL_LoadFunction(mikmod.handle, "Player_Active");
+diff --git a/dynamic_mod.h b/dynamic_mod.h
+index 3561b151..19740d4a 100644
+--- a/dynamic_mod.h
++++ b/dynamic_mod.h
+@@ -35,6 +35,7 @@ typedef struct {
+ 	void (*MikMod_RegisterDriver)(struct MDRIVER*);
+ 	int* MikMod_errno;
+ 	char* (*MikMod_strerror)(int);
++	void (*MikMod_free)(void*);
+ 	BOOL (*Player_Active)(void);
+ 	void (*Player_Free)(MODULE*);
+ 	MODULE* (*Player_LoadGeneric)(MREADER*,int,BOOL);
+diff --git a/music_mod.c b/music_mod.c
+index be179022..38cc7503 100644
+--- a/music_mod.c
++++ b/music_mod.c
+@@ -109,13 +109,13 @@ int MOD_init(SDL_AudioSpec *mixerfmt)
+ 
+ 	list = mikmod.MikMod_InfoDriver();
+ 	if ( list )
+-	  free(list);
++	  mikmod.MikMod_free(list);
+ 	else
+ 	  mikmod.MikMod_RegisterDriver(mikmod.drv_nos);
+ 
+ 	list = mikmod.MikMod_InfoLoader();
+ 	if ( list )
+-	  free(list);
++	  mikmod.MikMod_free(list);
+ 	else
+ 	  mikmod.MikMod_RegisterAllLoaders();
+ 
+-- 
+2.51.0
+

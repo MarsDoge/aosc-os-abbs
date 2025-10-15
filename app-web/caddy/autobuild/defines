@@ -2,6 +2,6 @@ PKGNAME=caddy
 PKGSEC=web
 PKGDES="Fast and extensible multi-platform HTTP/1-2-3 web server with automatic HTTPS"
 PKGDEP="glibc"
-BUILDDEP="go xcaddy"
+BUILDDEP="go"
 
-ABSPLITDBG=0
+ABTYPE=gomod

@@ -1,0 +1,10 @@
+PKGNAME=pakfixer
+PKGSEC=utils
+PKGDEP="glibc xz openssl gcc-runtime zlib"
+BUILDDEP="rustc llvm-20"
+PKGRECOM="autobuild4"
+PKGDES="Static code analyzer for AOSC packaging scripts"
+
+ABTYPE=rust
+USECLANG=1
+CARGO_AFTER=("-ppakfixer")

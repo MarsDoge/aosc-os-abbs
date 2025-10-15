@@ -1,9 +1,11 @@
 PKGNAME=llvm-runtime
 PKGSEC=libs
-PKGDEP="llvm-runtime-18"
+PKGDEP="llvm-runtime-20"
 PKGDES="Low Level Virtual Machine Infrastructure (runtime libraries)"
 
 PKGEPOCH=1
 
-ABTYPE=dummy
-ABHOST=noarch
+ABTYPE=self
+ABSPLITDBG=0
+PKGBREAK="llvm-runtime-18<=18.1.8-10 llvm-runtime-20<=20.1.8-1"
+PKGREP="llvm-runtime-18<=18.1.8-10 llvm-runtime-20<=20.1.8-1"

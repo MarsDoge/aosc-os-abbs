@@ -4,4 +4,4 @@ PKGDEP="libatasmart ncurses"
 PKGDES="An interactive TUI S.M.A.R.T. viewer"
 
 # FIXME: FTBFS invalid conversion from ‘void (*)(int)’ to ‘int’
-FAIL_ARCH="(loongson3|mips64r6el)"
+FAIL_ARCH="(loongson3)"

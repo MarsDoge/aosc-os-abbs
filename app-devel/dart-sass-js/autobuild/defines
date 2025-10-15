@@ -1,0 +1,8 @@
+PKGNAME=dart-sass-js
+PKGSEC=devel
+PKGDEP="nodejs"
+PKGDES="Reference implementation of Sass compiled as Node.js"
+PKGCONFL="dart-sass sass"
+
+ABTYPE=self
+ABHOST=noarch

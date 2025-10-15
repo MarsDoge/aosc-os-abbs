@@ -5,7 +5,7 @@ PKGDEP="a52dec aalib bluez bzip2 cairo cdparanoia chromaprint elfutils faac \
         graphene gsm gtk-4 jack json-glib ladspa-sdk lame libavc1394 libavtp \
         libbs2b libcaca libcap libcdio libdca libde265 libdrm libdv libdvdnav \
         libdvdread libfdk-aac libfreeaptx libglvnd libgudev libiec61883 \
-        libkate libldac liblrdf libltc libmicrodns libmpcdec libmpeg2 libnice \
+        libldac liblrdf libltc libmicrodns libmpcdec libmpeg2 libnice \
         libraw1394 libshout libsidplay libsoup libtheora libunwind \
         libva libvisual libvpx libxkbcommon libxml2 lilv lv2 mesa mjpegtools \
         mpg123 neon nettle openal-soft opencore-amr openh264 opus orc \
@@ -15,7 +15,7 @@ PKGDEP="a52dec aalib bluez bzip2 cairo cdparanoia chromaprint elfutils faac \
         dssim-c openjpeg rav1e libsodium"
 PKGDEP__AMD64="${PKGDEP} openmpt svt-hevc"
 PKGDEP__ARM64="${PKGDEP} openmpt"
-BUILDDEP="bash-completion gobject-introspection graphviz llvm \
+BUILDDEP="bash-completion gobject-introspection graphviz llvm-20 \
           nasm opencv qt-5 rustc shaderc tomli vulkan-headers \
           vulkan-loader vulkan-validationlayers wayland-protocols"
 PKGDES="A modular and extensible multimedia framework"
@@ -30,8 +30,8 @@ PKGREP="${PKGBREAK}"
 # Note: -Dlibnice=disabled, to use system dependency (enabled means using
 # libnice sources in the subproject, WTF).
 #
-# Note: -Drs=disabled, Rust bindings are used for development only (usually
-# bundled as a dependency in third-party projects).
+# Note: -Drs=disabled, Rust bindings are provided in `gst-plugins-rs` as
+# they are not simply submodules but subprojects not shipped with `gstreamer`.
 #
 # FIXME: -Ddoc=disabled
 # Downloading https://github.com/hotdoc/hotdoc_lumen_theme/releases/download/0.16/hotdoc_lumen_theme-0.16.tar.xz?sha256=b7d7dde51285d1c90836c44ae298754e4cfa957e9a6d14ee5844b8a2cac04b5a
@@ -82,8 +82,11 @@ MESON_AFTER__LOONGARCH64=(
     "${MESON_AFTER[@]}"
     '-Ddevtools=disabled'
 )
+MESON_AFTER__LOONGARCH64_NOSIMD=("${MESON_AFTER__LOONGARCH64[@]}")
 
 ABTYPE=meson
 
 # FIXME: ld.lld: error: relocation R_MIPS_64 cannot be used against local symbol; recompile with -fPIC
 NOLTO__LOONGSON3=1
+
+PKGPROV="gstreamer1.0-plugins-good_spiral"

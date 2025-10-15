@@ -1,7 +1,7 @@
 PKGNAME=liblphobos
 PKGSEC=devel
-PKGDEP="libconfig libedit ncurses spirv-llvm-translator llvm-runtime"
-BUILDDEP="cmake llvm gdmd"
+PKGDEP="libconfig libedit ncurses spirv-llvm-translator llvm-runtime-18"
+BUILDDEP="cmake llvm-18 gdmd"
 PKGDES="The LLVM-based D compiler runtime"
 
 AB_FLAGS_SPECS=0
@@ -27,4 +27,4 @@ PKGBREAK="dub<=1.18.0 gtkd<=3.9.0-2 ldc<=1.18.0 tilix<=20190901-2"
 PKGREP="ldc<=1.1.0b5"
 
 # FIXME: Does not build on these architectures.
-FAIL_ARCH="(loongson3|mips64r6el|ppc64el)"
+FAIL_ARCH="(loongson3|ppc64el)"

@@ -1,9 +1,9 @@
-UPSTREAM_VER=6.13
+UPSTREAM_VER=6.15
 POSIXVER=2017-a
 VER=${UPSTREAM_VER}+posix${POSIXVER/-a/a}
 SRCS="tbl::https://www.kernel.org/pub/linux/docs/man-pages/man-pages-${UPSTREAM_VER}.tar.xz \
       tbl::https://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/man-pages-posix-${POSIXVER}.tar.xz"
 SUBDIR="man-pages-${UPSTREAM_VER}"
-CHKSUMS="sha256::a2c8a0c2efe8a978ce51ce800461eb9e8931f12cc7ba4b7faa3082b69ba7f12c \
+CHKSUMS="sha256::03d8ebf618bd5df57cb4bf355efa3f4cd3a00b771efd623d4fd042b5dceb4465 \
          sha256::ce67bb25b5048b20dad772e405a83f4bc70faf051afa289361c81f9660318bc3"
 CHKUPDATE="anitya::id=1883"

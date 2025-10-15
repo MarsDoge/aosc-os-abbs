@@ -1,4 +1,4 @@
-VER=3.10.3
+VER=3.11.2
 SRCS="tbl::https://feh.finalrewind.org/feh-$VER.tar.bz2"
-CHKSUMS="sha256::5426e2799770217af1e01c2e8c182d9ca8687d84613321d8ab4a66fe4041e9c8"
+CHKSUMS="sha256::020f8bce84c709333dcc6ec5fff36313782e0b50662754947c6585d922a7a7b2"
 CHKUPDATE="anitya::id=790"

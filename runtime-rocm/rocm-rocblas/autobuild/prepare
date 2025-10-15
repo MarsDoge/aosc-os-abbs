@@ -1,0 +1,17 @@
+BUILD_FINAL(){
+    # FIXME: Missing build dependencies steps
+    # CMake Error at clients/cmake_install.cmake:51 (file):
+    #   file INSTALL cannot find
+    #   "clients/staging/rocblas_common.yaml":
+    #   No such file or directory.
+    ninja rocblas-common
+}
+
+abinfo "Setting ROCM_PATH ..."
+export ROCM_PATH=/usr/lib/rocm
+
+abinfo "Adding ROCm LLVM to PATH ..."
+export PATH="/usr/lib/rocm/lib/llvm/bin:$PATH"
+
+abinfo "Adding ROCm to PATH ..."
+export PATH="/usr/lib/rocm/bin:$PATH"

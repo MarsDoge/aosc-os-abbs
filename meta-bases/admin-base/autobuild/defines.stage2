@@ -5,11 +5,9 @@ PKGRECOM="apt btrfs-progs cryptsetup dbus debianutils dosfstools e2fsprogs \
           shadow smartmontools sysfsutils trousers xfsprogs sudo bcache-tools \
           mdadm multipath-tools mtd-utils nvme-cli quota-tools sg3-utils \
           core-base genfstab kernel-tools exfat-utils gpart jfsutils \
-          reiserfsprogs hfsprogs hddtemp powertop apt-file atm"
-PKGRECOM__AMD64="${PKGRECOM} acpi acpid tlp pstate-frequency"
+          reiserfsprogs hfsprogs hddtemp powertop apt-file"
+PKGRECOM__AMD64="${PKGRECOM} acpi acpid tlp"
 PKGRECOM__ARM64="${PKGRECOM} cyanberry-config acpi acpid"
-# FIXME: No working Rust toolchain.
-PKGRECOM__MIPS64R6EL="${PKGRECOM/atm/}"
 
 PKGRECOM__RETRO="apt dbus e2fsprogs gnupg os-prober shadow sudo genfstab"
 PKGRECOM__ARMV4="${PKGRECOM__RETRO}"

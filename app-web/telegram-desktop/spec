@@ -1,13 +1,16 @@
-VER=5.13.1
-# Update tg_owt to the latest Git snapshot when updating Telegram Desktop
-OWTVER=be39b8c8d0db1f377118f813f0c4bd331d341d5e
+VER=6.1.3
+# Update tg_owt and tdlib to the latest Git snapshot when updating Telegram Desktop
+OWTVER=5c5c71258777d0196dbb3a09cc37d2f56ead28ab
+TDLIBVER=6dca40bdaac8b5e66c7a793727bf3f81e9711f70
 SRCS="tbl::https://github.com/telegramdesktop/tdesktop/releases/download/v$VER/tdesktop-$VER-full.tar.gz \
-      git::rename=tg_owt;commit=${OWTVER}::https://github.com/desktop-app/tg_owt"
-CHKSUMS="sha256::caa37bbf7d9fcdfecdb5f596f02a44becbe468ea5c6af7f3c670b61952744a80 \
+      git::rename=tg_owt;commit=${OWTVER}::https://github.com/desktop-app/tg_owt
+      git::rename=td;commit=${TDLIBVER}::https://github.com/tdlib/td"
+CHKSUMS="sha256::1c6a531abf106d5f4b6d9179fc802f93cb8ab62630cc07e73d64688780125869 \
+         SKIP \
          SKIP"
 SUBDIR="tdesktop-$VER-full"
 CHKUPDATE="anitya::id=16951"
-ENVREQ__ARM64="total_mem_per_core=3"
+ENVREQ__ARM64="total_mem=60"
 ENVREQ__LOONGARCH64="total_mem_per_core=4"
 ENVREQ__LOONGSON3="total_mem_per_core=4"
 ENVREQ__PPC64EL="total_mem_per_core=4"

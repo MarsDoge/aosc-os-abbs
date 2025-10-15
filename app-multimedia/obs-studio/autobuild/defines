@@ -6,11 +6,13 @@ PKGDEP="ffmpeg jansson libfdk-aac x11-lib libxkbcommon qt-6 curl imagemagick \
 PKGDEP__INTEL_QSV="libvpl"
 PKGDEP__AMD64="${PKGDEP} ${PKGDEP__INTEL_QSV}"
 
-BUILDDEP="cmake x264 swig vlc pipewire jack patchelf python-3 nlohmann-json ffnvcodec"
+PKGRECOM="v4l2loopback"
+
+BUILDDEP="cmake x264 swig vlc pipewire jack patchelf python-3 nlohmann-json \
+          ffnvcodec extra-cmake-modules simde"
 BUILDDEP__AMD64="${BUILDDEP} luajit"
 BUILDDEP__ARM64="${BUILDDEP__AMD64}"
 BUILDDEP__LOONGSON3="${BUILDDEP__AMD64}"
-BUILDDEP__MIPS64R6EL="${BUILDDEP__AMD64}"
 
 PKGDES="Free, open source software for live streaming and recording"
 
@@ -49,10 +51,6 @@ CMAKE_AFTER__ARM64=(
 	"${CMAKE_AFTER__LUA[@]}"
 )
 CMAKE_AFTER__LOONGSON3=(
-	"${CMAKE_AFTER[@]}"
-	"${CMAKE_AFTER__LUA[@]}"
-)
-CMAKE_AFTER__MIPS64R6EL=(
 	"${CMAKE_AFTER[@]}"
 	"${CMAKE_AFTER__LUA[@]}"
 )

@@ -1,7 +1,7 @@
-From c70e792aea6608037859d549e1d0850051b2e7bf Mon Sep 17 00:00:00 2001
+From a890235282ba1d7e78c2d3285f3857a4e38e16cf Mon Sep 17 00:00:00 2001
 From: Kaiyang Wu <self@origincode.me>
 Date: Sat, 31 Aug 2024 00:01:51 -0700
-Subject: [PATCH 2/2] napi: enable lto
+Subject: [PATCH 2/4] napi: enable lto
 
 Signed-off-by: Kaiyang Wu <self@origincode.me>
 ---
@@ -9,13 +9,13 @@ Signed-off-by: Kaiyang Wu <self@origincode.me>
  1 file changed, 6 insertions(+)
 
 diff --git a/apps/desktop/desktop_native/napi/Cargo.toml b/apps/desktop/desktop_native/napi/Cargo.toml
-index f5b6d6b7c0..960cb4c96f 100644
+index 9e8404ea8d..7e64c336f6 100644
 --- a/apps/desktop/desktop_native/napi/Cargo.toml
 +++ b/apps/desktop/desktop_native/napi/Cargo.toml
-@@ -31,3 +31,9 @@ windows-registry = { workspace = true }
+@@ -38,3 +38,9 @@ napi-build = { workspace = true }
  
- [build-dependencies]
- napi-build = { workspace = true }
+ [lints]
+ workspace = true
 +
 +[profile.release]
 +lto = true
@@ -23,5 +23,5 @@ index f5b6d6b7c0..960cb4c96f 100644
 +strip = false
 +incremental = false
 -- 
-2.49.0
+2.51.0
 

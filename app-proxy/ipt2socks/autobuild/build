@@ -1,0 +1,6 @@
+abinfo "Building ipt2socks ..."
+make
+
+abinfo "Installing ipt2socks ..."
+make install \
+    DESTDIR="$PKGDIR"/usr/bin

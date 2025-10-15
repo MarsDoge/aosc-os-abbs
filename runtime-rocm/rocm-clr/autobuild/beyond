@@ -3,5 +3,5 @@ rm -rv "$PKGDIR"/usr/lib/rocm/lib/libOpenCL* "$PKGDIR"/usr/lib/rocm/include/CL "
 
 abinfo "Fixing permission of HIP libraries ..."
 for i in libhiprtc-builtins libamdhip64 libhiprtc; do
-	chmod a+x "$PKGDIR"/usr/lib/rocm/lib/$i.so.*-*
+	chmod a+x "$PKGDIR"/usr/lib/rocm/lib/$i.so*
 done

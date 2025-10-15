@@ -1,16 +1,25 @@
 PKGNAME=deno
 PKGSEC=devel
-PKGDES="A secure JavaScript and TypeScript runtime"
 PKGDEP="glibc gcc-runtime"
 PKGSUG="mesa"
-BUILDDEP="python-3 rustc gn llvm ninja"
+BUILDDEP="rustc llvm protobuf python-3 gn ninja"
+PKGDES="JavaScript and TypeScript runtime"
 
+ABTYPE=rust
 USECLANG=1
+
+# loongson3: Missing libclang_rt.builtins.a.
+#
+# loongarch64, ppc64el, loongson3: no wasmtime/cranelift support.
+# * https://github.com/bytecodealliance/wasmtime/blob/f7a5aa34d9b1f1e74ccf5d39740221400f12bb81/cranelift/codegen/meta/src/isa/mod.rs#L11
+# * https://github.com/loongson-community/discussions/issues/59
+#
+# riscv64: fails to build ring crate
+# * https://github.com/denoland/deno/issues/18702
+FAIL_ARCH="!(amd64|arm64)"
+
+# FIXME:
+# ld.lld: error: undefined symbol: aws_lc_0_26_0_EVP_parse_private_key
+# >>> referenced by evp_pkey.rs:171 (/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/aws-lc-rs-1.12.4/src/evp_pkey.rs:171)
+# >>> /var/cache/acbs/build/acbs.hoqni7cd/deno/target/release/deps/test_server-63bd788806c63baf.lto.o:(_$LT$rustls..crypto..aws_lc_rs..AwsLcRs$u20$as$u20$rustls..crypto..KeyProvider$GT$::load_private_key::h8359cdda80ece7cf)
 NOLTO=1
-NOCARGOAUDIT=1
-FAIL_ARCH="!(amd64|arm64|ppc64el|riscv64)"
-# FIXME: missing ld.lld support
-USECLANG__LOONGSON3=0
-USECLANG__LOONGARCH64=0
-USECLANG__MIPS64R6EL=0
-ABSPLITDBG=0

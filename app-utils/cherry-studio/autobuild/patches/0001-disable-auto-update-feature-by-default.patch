@@ -1,0 +1,56 @@
+diff --git a/src/main/services/AppUpdater.ts b/src/main/services/AppUpdater.ts
+index bdfb8e3cc..aac1e1f49 100644
+--- a/src/main/services/AppUpdater.ts
++++ b/src/main/services/AppUpdater.ts
+@@ -123,6 +123,7 @@ export default class AppUpdater {
+   }
+ 
+   public setAutoUpdate(isActive: boolean) {
++    isActive = false
+     autoUpdater.autoDownload = isActive
+     autoUpdater.autoInstallOnAppQuit = isActive
+   }
+diff --git a/src/main/services/ConfigManager.ts b/src/main/services/ConfigManager.ts
+index 5f5be2c72..1d0c5178b 100644
+--- a/src/main/services/ConfigManager.ts
++++ b/src/main/services/ConfigManager.ts
+@@ -139,7 +139,7 @@ export class ConfigManager {
+   }
+ 
+   getAutoUpdate(): boolean {
+-    return this.get<boolean>(ConfigKeys.AutoUpdate, true)
++    return this.get<boolean>(ConfigKeys.AutoUpdate, false)
+   }
+ 
+   setAutoUpdate(value: boolean) {
+diff --git a/src/renderer/src/pages/settings/AboutSettings.tsx b/src/renderer/src/pages/settings/AboutSettings.tsx
+index 72a545f4b..64e8e7de0 100644
+--- a/src/renderer/src/pages/settings/AboutSettings.tsx
++++ b/src/renderer/src/pages/settings/AboutSettings.tsx
+@@ -216,26 +216,9 @@ const AboutSettings: FC = () => {
+               </Tag>
+             </VersionWrapper>
+           </Row>
+-          {!isPortable && (
+-            <CheckUpdateButton
+-              onClick={onCheckUpdate}
+-              loading={update.checking}
+-              disabled={update.downloading || update.checking}>
+-              {update.downloading
+-                ? t('settings.about.downloading')
+-                : update.available
+-                  ? t('settings.about.checkUpdate.available')
+-                  : t('settings.about.checkUpdate.label')}
+-            </CheckUpdateButton>
+-          )}
+         </AboutHeader>
+         {!isPortable && (
+           <>
+-            <SettingDivider />
+-            <SettingRow>
+-              <SettingRowTitle>{t('settings.general.auto_check_update.title')}</SettingRowTitle>
+-              <Switch value={autoCheckUpdate} onChange={(v) => setAutoCheckUpdate(v)} />
+-            </SettingRow>
+             <SettingDivider />
+             <SettingRow>
+               <SettingRowTitle>{t('settings.general.test_plan.title')}</SettingRowTitle>

@@ -5,14 +5,11 @@ desktop-gnome/evolution
 desktop-gnome/glade
 desktop-gnome/yelp
 desktop-mate/atril
-desktop-gnome/balsa
 desktop-gnome/bijiben
 desktop-gnome/epiphany
-desktop-gnome/geary
 desktop-gnome/gnome-builder
 desktop-gnome/gnome-initial-setup
 app-web/liferea
-app-web/midori
 app-network/remmina
 desktop-gnome/shotwell
 runtime-desktop/wxwidgets

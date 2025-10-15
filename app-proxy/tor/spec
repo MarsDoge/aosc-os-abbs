@@ -1,0 +1,4 @@
+VER=0.4.8.19
+SRCS="tbl::https://www.torproject.org/dist/tor-$VER.tar.gz"
+CHKSUMS="sha256::3cb649a1d33ba6a65f109d224534e93aaf0a6de84a5b1cb4b054bfa06bb74f5a"
+CHKUPDATE="anitya::id=4991"

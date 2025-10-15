@@ -35,8 +35,6 @@ BUILDDEP__PPC64="${BUILDDEP__RETRO}"
 PKGDES="Linux network configuration tool suite"
 
 ABTYPE=meson
-# Turn off LTO for mips64r6el or it will eat out RAM of QEMU host.
-NOLTO__MIPS64R6EL=1
 
 # Note: We still use wpa_supplicant by default, we find it more reliable.
 # FIXME: Disabling eBPF due to issues with ACB probes, which causes no IPv4 via

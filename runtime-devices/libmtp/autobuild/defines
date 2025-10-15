@@ -3,4 +3,12 @@ PKGSEC=libs
 PKGDEP="libusb libgcrypt"
 PKGDES="Implementation of the Media Transfer Protocol"
 
-AUTOTOOLS_AFTER="--with-udev=/usr/lib/udev"
+ABTYPE=autotools
+AUTOTOOLS_AFTER=(
+    '--with-udev=/usr/lib/udev'
+)
+
+# FIXME: autogen.sh contains interactive prompts.
+#
+# Skip `Autoupdate config.sub and config.guess (y/n)?`
+ABNOAUTOGEN=1

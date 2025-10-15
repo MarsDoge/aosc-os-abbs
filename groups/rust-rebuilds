@@ -2,7 +2,6 @@ app-admin/atm
 app-admin/bottom
 app-admin/thin-provisioning-tools
 app-admin/systemd-boot-friend
-app-admin/apt-gen-list
 app-devel/ciel
 app-devel/sccache
 app-devel/tokei
@@ -43,7 +42,6 @@ app-utils/nomino
 app-i18n/meowdict
 app-utils/aosc-findupdate
 runtime-common/rustc-demangle
-app-web/sozu
 app-utils/starship
 app-utils/wezterm
 app-utils/gitui

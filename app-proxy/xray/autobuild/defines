@@ -1,0 +1,8 @@
+PKGNAME="xray"
+PKGSEC=net
+PKGDES="V2Ray with XTLS support"
+PKGDEP="glibc v2ray-rules-dat"
+BUILDDEP="go"
+
+ABTYPE=gomod
+GO_PACKAGES=("main")

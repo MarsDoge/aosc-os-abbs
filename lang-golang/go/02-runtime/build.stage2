@@ -1,0 +1,17 @@
+abinfo "Setting up build environment ..."
+export GOOS=linux
+
+if ab_match_arch amd64; then
+    export GOARCH="amd64" GOAMD64=v1
+fi
+if ab_match_arch arm64; then
+    export GOARCH="arm64"
+fi
+if ab_match_arch ppc64el; then
+    export GOARCH="ppc64le"
+fi
+
+abinfo "Installing go-runtime ..."
+mkdir -pv "$PKGDIR"/usr/lib/go/pkg/tool
+mv -v "$SRCDIR"/"$GOOS"_"$GOARCH"_dynlink \
+    "$PKGDIR"/usr/lib/go/pkg/tool/"$GOOS"_"$GOARCH"_dynlink
